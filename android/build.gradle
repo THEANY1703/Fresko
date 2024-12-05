@@ -6,23 +6,34 @@ allprojects {
 }
 
 rootProject.buildDir = '../build'
+
 subprojects {
     afterEvaluate { project ->
         if (project.plugins.hasPlugin("com.android.application") ||
                 project.plugins.hasPlugin("com.android.library")) {
             project.android {
-                compileSdkVersion 34
+                compileSdkVersion 34 // Assicura che compileSdkVersion sia coerente per tutti i sottoprogetti
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_17 // Usa la stessa versione per Java e Kotlin
+                    targetCompatibility JavaVersion.VERSION_17
+                }
             }
         }
     }
 }
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
+}
+dependencies {
+    classpath 'com.android.tools.build:gradle:8.0.2'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10'
 }
