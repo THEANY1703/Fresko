@@ -1,0 +1,32 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "User",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Role",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "display_name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Event",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "organizers",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "DateEvent",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
+}

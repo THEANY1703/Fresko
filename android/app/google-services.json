@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "739191332468",
+    "project_id": "fresko-1e75d",
+    "storage_bucket": "fresko-1e75d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739191332468:android:ad27961b47cda40615bb21",
+        "android_client_info": {
+          "package_name": "com.StepByDevs.fresko"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm0WlP4z1AcMr0iwF6z4jTuQ6ujOC0MBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739191332468:android:6b55151f9c57524115bb21",
+        "android_client_info": {
+          "package_name": "com.stepbydevs.fresko"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm0WlP4z1AcMr0iwF6z4jTuQ6ujOC0MBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
