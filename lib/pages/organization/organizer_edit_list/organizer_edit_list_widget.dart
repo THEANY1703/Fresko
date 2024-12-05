@@ -546,7 +546,7 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
                                                   safeSetState(() {
                                                     _model
                                                         .selectPrTextController
-                                                        ?.text = null;
+                                                        ?.text = '';
                                                     _model.selectPrFocusNode
                                                         ?.requestFocus();
                                                     WidgetsBinding.instance
