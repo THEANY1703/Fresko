@@ -27,14 +27,13 @@ android {
     compileSdkVersion 34
     namespace 'com.stepbydevs.fresko' // Android namespace (sostituisce "applicationId" in alcune versioni di Gradle)
 
-    defaultConfig {
-        applicationId "com.stepbydevs.fresko" // Cambialo se necessario
-        minSdkVersion 21 // Assicurati che la versione minima sia >= 21
+     defaultConfig {
+        applicationId "com.stepbydevs.fresko" // Sostituisci con il tuo applicationId
+        minSdkVersion 23 // Cambiato da 21 a 23
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
