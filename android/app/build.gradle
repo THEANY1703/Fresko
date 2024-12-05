@@ -27,7 +27,7 @@ android {
     compileSdkVersion 34
     namespace 'com.stepbydevs.fresko' // Android namespace (sostituisce "applicationId" in alcune versioni di Gradle)
 
-     defaultConfig {
+    defaultConfig {
         applicationId "com.stepbydevs.fresko" // Sostituisci con il tuo applicationId
         minSdkVersion 23 // Cambiato da 21 a 23
         targetSdkVersion 34
@@ -57,6 +57,13 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17 // Allinea con Kotlin JVM
         targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // Aggiungi la configurazione JVM toolchain qui
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17)) // Forza Java 17 per Gradle
+        }
     }
 
     kotlinOptions {
