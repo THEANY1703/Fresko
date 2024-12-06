@@ -1,28 +1,18 @@
 workflows:
-  ios-release:
-    name: iOS Release Workflow
+  ios-build:
+    name: iOS Build Workflow
     environment:
       flutter: stable
       xcode: latest
     scripts:
-      - name: Install dependencies
+      - name: Clean and Install Pods
         script: |
-          flutter pub get
           cd ios
+          rm -rf Podfile.lock Pods
+          pod repo update
           pod install
           cd ..
       - name: Build iOS App
-        script: flutter build ipa --release
+        script: flutter build ipa --release --no-codesign
     artifacts:
       - build/ios/ipa
-  android-release:
-    name: Android Release Workflow
-    environment:
-      flutter: stable
-    scripts:
-      - name: Install dependencies
-        script: flutter pub get
-      - name: Build Android App
-        script: flutter build apk --release
-    artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
