@@ -33,8 +33,7 @@ target 'Runner' do
   # Installa tutte le dipendenze necessarie
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
-  # Mantieni questa riga solo se hai bisogno di questa versione specifica di Firestore
-  pod 'FirebaseFirestore', :'~> 11.2.0'
+  pod 'Firebase/Firestore'
 end
 
 post_install do |installer|
