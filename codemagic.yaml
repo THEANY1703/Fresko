@@ -1,0 +1,28 @@
+workflows:
+  ios-release:
+    name: iOS Release Workflow
+    environment:
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Install dependencies
+        script: |
+          flutter pub get
+          cd ios
+          pod install
+          cd ..
+      - name: Build iOS App
+        script: flutter build ipa --release
+    artifacts:
+      - build/ios/ipa
+  android-release:
+    name: Android Release Workflow
+    environment:
+      flutter: stable
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Build Android App
+        script: flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
