@@ -40,7 +40,7 @@
         <string>fresko</string>
         <key>CFBundleURLSchemes</key>
         <array>
-        <string>com.stepbydevs.fresko</string>
+        <string>com.appspot.fresko</string>
         </array>
         </dict>
     </array>
