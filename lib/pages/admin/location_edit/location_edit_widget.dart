@@ -9,6 +9,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'location_edit_model.dart';
 export 'location_edit_model.dart';
 
@@ -46,7 +47,7 @@ class _LocationEditWidgetState extends State<LocationEditWidget> {
         TextEditingController(text: widget.locationRef?.address);
 
     _model.linksocialTextController ??=
-        TextEditingController(text: widget.locationRef?.social.first);
+        TextEditingController(text: widget.locationRef?.social.firstOrNull);
     _model.linksocialFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -62,7 +63,10 @@ class _LocationEditWidgetState extends State<LocationEditWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -80,21 +84,18 @@ class _LocationEditWidgetState extends State<LocationEditWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed('ProfileAdmin');
+              context.safePop();
             },
           ),
-          title: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-            child: Text(
-              'modifca Locale',
-              style: FlutterFlowTheme.of(context).displaySmall.override(
-                    fontFamily: ' Brigends Expanded',
-                    color: FlutterFlowTheme.of(context).tertiary,
-                    fontSize: 20.0,
-                    letterSpacing: 0.0,
-                    useGoogleFonts: false,
-                  ),
-            ),
+          title: Text(
+            'modifca Locale',
+            style: FlutterFlowTheme.of(context).displaySmall.override(
+                  fontFamily: ' Brigends Expanded',
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  fontSize: 20.0,
+                  letterSpacing: 0.0,
+                  useGoogleFonts: false,
+                ),
           ),
           actions: const [],
           centerTitle: true,
@@ -452,10 +453,9 @@ class _LocationEditWidgetState extends State<LocationEditWidget> {
                             child: SizedBox(
                               width: 50.0,
                               height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).alternate,
-                                ),
+                              child: SpinKitFadingCube(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                size: 50.0,
                               ),
                             ),
                           );

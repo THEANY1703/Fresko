@@ -11,6 +11,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:share_plus/share_plus.dart';
 import 'event_page_backup_model.dart';
 export 'event_page_backup_model.dart';
@@ -94,10 +95,9 @@ class _EventPageBackupWidgetState extends State<EventPageBackupWidget>
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    FlutterFlowTheme.of(context).alternate,
-                  ),
+                child: SpinKitFadingCube(
+                  color: FlutterFlowTheme.of(context).alternate,
+                  size: 50.0,
                 ),
               ),
             ),
@@ -107,7 +107,10 @@ class _EventPageBackupWidgetState extends State<EventPageBackupWidget>
         final eventPageBackupEventRecord = snapshot.data!;
 
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -475,15 +478,12 @@ class _EventPageBackupWidgetState extends State<EventPageBackupWidget>
                                                   child: SizedBox(
                                                     width: 50.0,
                                                     height: 50.0,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      valueColor:
-                                                          AlwaysStoppedAnimation<
-                                                              Color>(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .alternate,
-                                                      ),
+                                                    child: SpinKitFadingCube(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      size: 50.0,
                                                     ),
                                                   ),
                                                 );
@@ -626,9 +626,12 @@ class _EventPageBackupWidgetState extends State<EventPageBackupWidget>
                                       alignment: const AlignmentDirectional(0.0, 0.0)
                                           .resolve(Directionality.of(context)),
                                       child: GestureDetector(
-                                        onTap: () =>
-                                            FocusScope.of(dialogContext)
-                                                .unfocus(),
+                                        onTap: () {
+                                          FocusScope.of(dialogContext)
+                                              .unfocus();
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        },
                                         child: DialogTicketWidget(
                                           eventReference: widget.eventId!,
                                         ),

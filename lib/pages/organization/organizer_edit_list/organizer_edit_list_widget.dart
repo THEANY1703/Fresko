@@ -11,6 +11,7 @@ import '/flutter_flow/form_field_controller.dart';
 import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'organizer_edit_list_model.dart';
 export 'organizer_edit_list_model.dart';
 
@@ -64,10 +65,9 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    FlutterFlowTheme.of(context).alternate,
-                  ),
+                child: SpinKitFadingCube(
+                  color: FlutterFlowTheme.of(context).alternate,
+                  size: 50.0,
                 ),
               ),
             ),
@@ -77,7 +77,10 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
         final organizerEditListPrListRecord = snapshot.data!;
 
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -95,21 +98,18 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  context.pushNamed('EnterPage');
+                  context.safePop();
                 },
               ),
-              title: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-                child: Text(
-                  'modifica la lista',
-                  style: FlutterFlowTheme.of(context).displaySmall.override(
-                        fontFamily: ' Brigends Expanded',
-                        color: FlutterFlowTheme.of(context).tertiary,
-                        fontSize: 19.0,
-                        letterSpacing: 0.0,
-                        useGoogleFonts: false,
-                      ),
-                ),
+              title: Text(
+                'modifica lista',
+                style: FlutterFlowTheme.of(context).displaySmall.override(
+                      fontFamily: ' Brigends Expanded',
+                      color: FlutterFlowTheme.of(context).tertiary,
+                      fontSize: 19.0,
+                      letterSpacing: 0.0,
+                      useGoogleFonts: false,
+                    ),
               ),
               actions: const [],
               centerTitle: true,
@@ -331,12 +331,10 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
                                         child: SizedBox(
                                           width: 50.0,
                                           height: 50.0,
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              FlutterFlowTheme.of(context)
-                                                  .alternate,
-                                            ),
+                                          child: SpinKitFadingCube(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 50.0,
                                           ),
                                         ),
                                       );
@@ -443,12 +441,11 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
                                           child: SizedBox(
                                             width: 50.0,
                                             height: 50.0,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                FlutterFlowTheme.of(context)
-                                                    .alternate,
-                                              ),
+                                            child: SpinKitFadingCube(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 50.0,
                                             ),
                                           ),
                                         );
@@ -538,7 +535,7 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
                                                                   _model
                                                                       .selectPrSelectedOption)
                                                               .toList()
-                                                              .first
+                                                              .firstOrNull!
                                                               .reference);
                                                   _model.addToPrEditor(_model
                                                       .prSelected!.reference);
@@ -546,7 +543,7 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
                                                   safeSetState(() {
                                                     _model
                                                         .selectPrTextController
-                                                        ?.text = '';
+                                                        ?.text = ""; 
                                                     _model.selectPrFocusNode
                                                         ?.requestFocus();
                                                     WidgetsBinding.instance
@@ -699,10 +696,10 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
                                 child: SizedBox(
                                   width: 50.0,
                                   height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      FlutterFlowTheme.of(context).alternate,
-                                    ),
+                                  child: SpinKitFadingCube(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    size: 50.0,
                                   ),
                                 ),
                               );

@@ -51,7 +51,10 @@ class _OrganizationCreateWidgetState extends State<OrganizationCreateWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -72,19 +75,16 @@ class _OrganizationCreateWidgetState extends State<OrganizationCreateWidget> {
               context.safePop();
             },
           ),
-          title: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 15.0),
-            child: Text(
-              'Crea organizzazione',
-              textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).displaySmall.override(
-                    fontFamily: ' Brigends Expanded',
-                    color: FlutterFlowTheme.of(context).tertiary,
-                    fontSize: 16.0,
-                    letterSpacing: 0.0,
-                    useGoogleFonts: false,
-                  ),
-            ),
+          title: Text(
+            'Crea organizzazione',
+            textAlign: TextAlign.center,
+            style: FlutterFlowTheme.of(context).displaySmall.override(
+                  fontFamily: ' Brigends Expanded',
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  fontSize: 16.0,
+                  letterSpacing: 0.0,
+                  useGoogleFonts: false,
+                ),
           ),
           actions: const [],
           centerTitle: true,

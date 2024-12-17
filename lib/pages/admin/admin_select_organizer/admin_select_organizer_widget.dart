@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'admin_select_organizer_model.dart';
 export 'admin_select_organizer_model.dart';
 
@@ -38,7 +39,10 @@ class _AdminSelectOrganizerWidgetState
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -132,10 +136,10 @@ class _AdminSelectOrganizerWidgetState
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).alternate,
-                                      ),
+                                    child: SpinKitFadingCube(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      size: 50.0,
                                     ),
                                   ),
                                 );

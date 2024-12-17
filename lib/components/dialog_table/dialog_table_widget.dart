@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dialog_table_model.dart';
 export 'dialog_table_model.dart';
 
@@ -121,10 +122,9 @@ class _DialogTableWidgetState extends State<DialogTableWidget> {
                     child: SizedBox(
                       width: 50.0,
                       height: 50.0,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          FlutterFlowTheme.of(context).alternate,
-                        ),
+                      child: SpinKitFadingCube(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        size: 50.0,
                       ),
                     ),
                   );

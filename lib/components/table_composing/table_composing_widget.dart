@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:share_plus/share_plus.dart';
 import 'table_composing_model.dart';
 export 'table_composing_model.dart';
@@ -138,12 +139,10 @@ class _TableComposingWidgetState extends State<TableComposingWidget> {
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
+                                      child: SpinKitFadingCube(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        size: 50.0,
                                       ),
                                     ),
                                   );

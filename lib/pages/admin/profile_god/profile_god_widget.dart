@@ -58,10 +58,10 @@ class _ProfileGodWidgetState extends State<ProfileGodWidget> {
           },
         ),
         title: Text(
-          'FRESKO',
+          'superprofilo',
           style: FlutterFlowTheme.of(context).displayLarge.override(
                 fontFamily: ' Brigends Expanded',
-                fontSize: 35.0,
+                fontSize: 19.0,
                 letterSpacing: 0.0,
                 useGoogleFonts: false,
               ),
@@ -108,14 +108,11 @@ class _ProfileGodWidgetState extends State<ProfileGodWidget> {
                           spreadRadius: 7.0,
                         )
                       ],
-                      gradient: LinearGradient(
-                        colors: [
-                          FlutterFlowTheme.of(context).blueNCS,
-                          const Color(0xFFFF0092)
-                        ],
-                        stops: const [0.0, 1.0],
-                        begin: const AlignmentDirectional(0.14, -1.0),
-                        end: const AlignmentDirectional(-0.14, 1.0),
+                      gradient: const LinearGradient(
+                        colors: [Colors.black, Color(0xFF4A4A4A)],
+                        stops: [0.0, 0.5],
+                        begin: AlignmentDirectional(0.14, -1.0),
+                        end: AlignmentDirectional(-0.14, 1.0),
                       ),
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(
@@ -205,9 +202,9 @@ class _ProfileGodWidgetState extends State<ProfileGodWidget> {
                   alignment: const AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(37.0, 20.0, 0.0, 15.0),
                     child: Text(
-                      'Servizi admin',
+                      'Servizi Totali',
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                             fontFamily: ' Brigends Expanded',
                             letterSpacing: 0.0,

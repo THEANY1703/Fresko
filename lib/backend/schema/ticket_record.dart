@@ -74,8 +74,12 @@ class TicketRecord extends FirestoreRecord {
     _uniqueCode = snapshotData['UniqueCode'] as String?;
     _isApproved = snapshotData['IsApproved'] as bool?;
     _user = snapshotData['User'] as DocumentReference?;
-    _typeTable = deserializeEnum<TableType>(snapshotData['TypeTable']);
-    _typeTicket = deserializeEnum<TicketType>(snapshotData['TypeTicket']);
+    _typeTable = snapshotData['TypeTable'] is TableType
+        ? snapshotData['TypeTable']
+        : deserializeEnum<TableType>(snapshotData['TypeTable']);
+    _typeTicket = snapshotData['TypeTicket'] is TicketType
+        ? snapshotData['TypeTicket']
+        : deserializeEnum<TicketType>(snapshotData['TypeTicket']);
     _table = snapshotData['Table'] as DocumentReference?;
   }
 

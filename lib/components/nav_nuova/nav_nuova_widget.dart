@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'nav_nuova_model.dart';
 export 'nav_nuova_model.dart';
@@ -46,21 +45,19 @@ class _NavNuovaWidgetState extends State<NavNuovaWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 115.0,
+      width: 390.0,
+      height: 111.0,
       child: Stack(
         children: [
-          Opacity(
-            opacity: 0.1,
-            child: Align(
-              alignment: const AlignmentDirectional(0.0, 1.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(24.0),
-                child: SvgPicture.asset(
-                  'assets/images/navbar_4_bg_white.svg',
-                  width: double.infinity,
-                  height: 70.0,
-                  fit: BoxFit.cover,
-                ),
+          Align(
+            alignment: const AlignmentDirectional(0.0, 1.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24.0),
+              child: Image.asset(
+                'assets/images/Senza_titolo-1.png',
+                width: double.infinity,
+                height: 70.0,
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -155,7 +152,7 @@ class _NavNuovaWidgetState extends State<NavNuovaWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed('HomePage');
+                              context.pushNamed('SearchPage');
                             },
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -188,7 +185,7 @@ class _NavNuovaWidgetState extends State<NavNuovaWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed('HomePage');
+                              context.pushNamed('SearchPage');
                             },
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -221,96 +218,76 @@ class _NavNuovaWidgetState extends State<NavNuovaWidget> {
                   const Spacer(flex: 2),
                   Expanded(
                     flex: 2,
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        context.pushNamed(
-                          'LocationPage',
-                          extra: <String, dynamic>{
-                            kTransitionInfoKey: const TransitionInfo(
-                              hasTransition: true,
-                              transitionType: PageTransitionType.fade,
-                              duration: Duration(milliseconds: 0),
+                    child: Builder(
+                      builder: (context) {
+                        if (widget.pA == 3) {
+                          return InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed('NotificationPage');
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.notifications_rounded,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 28.0,
+                                ),
+                                Text(
+                                  'Nofiche',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Lato',
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        fontSize: 12.0,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ].divide(const SizedBox(height: 4.0)),
                             ),
-                          },
-                        );
+                          );
+                        } else {
+                          return InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed('NotificationPage');
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.notifications_rounded,
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  size: 28.0,
+                                ),
+                                Text(
+                                  'Notifiche',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Lato',
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiary,
+                                        fontSize: 12.0,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ].divide(const SizedBox(height: 4.0)),
+                            ),
+                          );
+                        }
                       },
-                      child: Builder(
-                        builder: (context) {
-                          if (widget.pA == 3) {
-                            return InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('LocationPage');
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.notifications_rounded,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    size: 28.0,
-                                  ),
-                                  Text(
-                                    'Nofiche',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Lato',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontSize: 12.0,
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
-                                ].divide(const SizedBox(height: 4.0)),
-                              ),
-                            );
-                          } else {
-                            return InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('LocationPage');
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.notifications_rounded,
-                                    color:
-                                        FlutterFlowTheme.of(context).tertiary,
-                                    size: 28.0,
-                                  ),
-                                  Text(
-                                    'Notifiche',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Lato',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiary,
-                                          fontSize: 12.0,
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
-                                ].divide(const SizedBox(height: 4.0)),
-                              ),
-                            );
-                          }
-                        },
-                      ),
                     ),
                   ),
                   Expanded(
@@ -322,7 +299,7 @@ class _NavNuovaWidgetState extends State<NavNuovaWidget> {
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         context.pushNamed(
-                          'LocationPage',
+                          'HomeLocationPage',
                           extra: <String, dynamic>{
                             kTransitionInfoKey: const TransitionInfo(
                               hasTransition: true,
@@ -341,7 +318,7 @@ class _NavNuovaWidgetState extends State<NavNuovaWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('LocationPage');
+                                context.pushNamed('HomeLocationPage');
                               },
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
@@ -375,7 +352,7 @@ class _NavNuovaWidgetState extends State<NavNuovaWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('LocationPage');
+                                context.pushNamed('HomeLocationPage');
                               },
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,

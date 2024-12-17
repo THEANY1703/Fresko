@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'organizer_select_event_model.dart';
 export 'organizer_select_event_model.dart';
 
@@ -43,7 +44,10 @@ class _OrganizerSelectEventWidgetState
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -64,20 +68,17 @@ class _OrganizerSelectEventWidgetState
               context.safePop();
             },
           ),
-          title: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-            child: Text(
-              'seleziona l\'evento',
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              style: FlutterFlowTheme.of(context).displaySmall.override(
-                    fontFamily: ' Brigends Expanded',
-                    color: FlutterFlowTheme.of(context).tertiary,
-                    fontSize: 17.0,
-                    letterSpacing: 0.0,
-                    useGoogleFonts: false,
-                  ),
-            ),
+          title: Text(
+            'seleziona evento',
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: FlutterFlowTheme.of(context).displaySmall.override(
+                  fontFamily: ' Brigends Expanded',
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  fontSize: 17.0,
+                  letterSpacing: 0.0,
+                  useGoogleFonts: false,
+                ),
           ),
           actions: const [],
           centerTitle: true,
@@ -140,10 +141,10 @@ class _OrganizerSelectEventWidgetState
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).alternate,
-                                      ),
+                                    child: SpinKitFadingCube(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      size: 50.0,
                                     ),
                                   ),
                                 );

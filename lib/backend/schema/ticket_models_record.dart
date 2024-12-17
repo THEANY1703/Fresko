@@ -45,7 +45,9 @@ class TicketModelsRecord extends FirestoreRecord {
 
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
-    _type = deserializeEnum<TicketType>(snapshotData['Type']);
+    _type = snapshotData['Type'] is TicketType
+        ? snapshotData['Type']
+        : deserializeEnum<TicketType>(snapshotData['Type']);
     _title = snapshotData['title'] as String?;
     _description = snapshotData['description'] as String?;
     _price = castToType<double>(snapshotData['price']);

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import '/backend/algolia/serialization_util.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -110,6 +112,81 @@ class EventRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       EventRecord._(reference, mapFromFirestore(data));
+
+  static EventRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      EventRecord.getDocumentFromData(
+        {
+          'Name': snapshot.data['Name'],
+          'DateEvent': convertAlgoliaParam(
+            snapshot.data['DateEvent'],
+            ParamType.DateTime,
+            false,
+          ),
+          'Location': convertAlgoliaParam(
+            snapshot.data['Location'],
+            ParamType.DocumentReference,
+            false,
+          ),
+          'Participants': safeGet(
+            () => convertAlgoliaParam<DocumentReference>(
+              snapshot.data['Participants'],
+              ParamType.DocumentReference,
+              true,
+            ).toList(),
+          ),
+          'totalParticipants': convertAlgoliaParam(
+            snapshot.data['totalParticipants'],
+            ParamType.int,
+            false,
+          ),
+          'organizers': safeGet(
+            () => convertAlgoliaParam<DocumentReference>(
+              snapshot.data['organizers'],
+              ParamType.DocumentReference,
+              true,
+            ).toList(),
+          ),
+          'creationAt': convertAlgoliaParam(
+            snapshot.data['creationAt'],
+            ParamType.DateTime,
+            false,
+          ),
+          'social': safeGet(
+            () => snapshot.data['social'].toList(),
+          ),
+          'description': snapshot.data['description'],
+          'Images': snapshot.data['Images'],
+          'Owner': convertAlgoliaParam(
+            snapshot.data['Owner'],
+            ParamType.DocumentReference,
+            false,
+          ),
+          'EventTags': convertAlgoliaParam(
+            snapshot.data['EventTags'],
+            ParamType.DocumentReference,
+            false,
+          ),
+        },
+        EventRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<EventRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'Event',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>

@@ -14,9 +14,13 @@ class RegisterPageModel extends FlutterFlowModel<RegisterPageWidget> {
   TextEditingController? emailTextController;
   String? Function(BuildContext, String?)? emailTextControllerValidator;
   // State field(s) for phone widget.
-  FocusNode? phoneFocusNode;
-  TextEditingController? phoneTextController;
-  String? Function(BuildContext, String?)? phoneTextControllerValidator;
+  FocusNode? phoneFocusNode1;
+  TextEditingController? phoneTextController1;
+  String? Function(BuildContext, String?)? phoneTextController1Validator;
+  // State field(s) for phone widget.
+  FocusNode? phoneFocusNode2;
+  TextEditingController? phoneTextController2;
+  String? Function(BuildContext, String?)? phoneTextController2Validator;
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordTextController;
@@ -43,8 +47,11 @@ class RegisterPageModel extends FlutterFlowModel<RegisterPageWidget> {
     emailFocusNode?.dispose();
     emailTextController?.dispose();
 
-    phoneFocusNode?.dispose();
-    phoneTextController?.dispose();
+    phoneFocusNode1?.dispose();
+    phoneTextController1?.dispose();
+
+    phoneFocusNode2?.dispose();
+    phoneTextController2?.dispose();
 
     passwordFocusNode?.dispose();
     passwordTextController?.dispose();

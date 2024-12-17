@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'admin_ban_model.dart';
 export 'admin_ban_model.dart';
 
@@ -42,7 +43,10 @@ class _AdminBanWidgetState extends State<AdminBanWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -60,22 +64,19 @@ class _AdminBanWidgetState extends State<AdminBanWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed('ProfileAdmin');
+              context.safePop();
             },
           ),
-          title: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-            child: Text(
-              'Ban Membri',
-              textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).displaySmall.override(
-                    fontFamily: ' Brigends Expanded',
-                    color: FlutterFlowTheme.of(context).tertiary,
-                    fontSize: 19.0,
-                    letterSpacing: 0.0,
-                    useGoogleFonts: false,
-                  ),
-            ),
+          title: Text(
+            'Elimina utenti ',
+            textAlign: TextAlign.center,
+            style: FlutterFlowTheme.of(context).displaySmall.override(
+                  fontFamily: ' Brigends Expanded',
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  fontSize: 16.0,
+                  letterSpacing: 0.0,
+                  useGoogleFonts: false,
+                ),
           ),
           actions: const [],
           centerTitle: true,
@@ -139,12 +140,10 @@ class _AdminBanWidgetState extends State<AdminBanWidget> {
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
+                                      child: SpinKitFadingCube(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        size: 50.0,
                                       ),
                                     ),
                                   );
@@ -352,7 +351,7 @@ class _AdminBanWidgetState extends State<AdminBanWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          'Membri ',
+                          'Utenti ',
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -379,10 +378,10 @@ class _AdminBanWidgetState extends State<AdminBanWidget> {
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).alternate,
-                                      ),
+                                    child: SpinKitFadingCube(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      size: 50.0,
                                     ),
                                   ),
                                 );
@@ -534,8 +533,11 @@ class _AdminBanWidgetState extends State<AdminBanWidget> {
                                                                             const AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                         child:
                                                                             GestureDetector(
-                                                                          onTap: () =>
-                                                                              FocusScope.of(dialogContext).unfocus(),
+                                                                          onTap:
+                                                                              () {
+                                                                            FocusScope.of(dialogContext).unfocus();
+                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                          },
                                                                           child:
                                                                               AlertDialogWidget(
                                                                             title:

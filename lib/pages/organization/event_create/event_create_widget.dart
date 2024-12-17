@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'event_create_model.dart';
 export 'event_create_model.dart';
 
@@ -56,7 +57,10 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -74,15 +78,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed(
-                'OrganizationPage',
-                queryParameters: {
-                  'organizationReference': serializeParam(
-                    currentUserDocument?.organization,
-                    ParamType.DocumentReference,
-                  ),
-                }.withoutNulls,
-              );
+              context.safePop();
             },
           ),
           title: Text(
@@ -678,12 +674,10 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
+                                      child: SpinKitFadingCube(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        size: 50.0,
                                       ),
                                     ),
                                   );
@@ -801,12 +795,10 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
+                                      child: SpinKitFadingCube(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        size: 50.0,
                                       ),
                                     ),
                                   );

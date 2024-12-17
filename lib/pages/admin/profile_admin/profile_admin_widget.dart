@@ -58,10 +58,10 @@ class _ProfileAdminWidgetState extends State<ProfileAdminWidget> {
           },
         ),
         title: Text(
-          'FRESKO',
+          'Admin',
           style: FlutterFlowTheme.of(context).displayLarge.override(
                 fontFamily: ' Brigends Expanded',
-                fontSize: 35.0,
+                fontSize: 20.0,
                 letterSpacing: 0.0,
                 useGoogleFonts: false,
               ),

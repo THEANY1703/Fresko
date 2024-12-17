@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import '/backend/algolia/serialization_util.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -63,7 +65,9 @@ class UserRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
-    _role = deserializeEnum<Role>(snapshotData['Role']);
+    _role = snapshotData['Role'] is Role
+        ? snapshotData['Role']
+        : deserializeEnum<Role>(snapshotData['Role']);
     _organization = snapshotData['Organization'] as DocumentReference?;
   }
 
@@ -86,6 +90,51 @@ class UserRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       UserRecord._(reference, mapFromFirestore(data));
+
+  static UserRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      UserRecord.getDocumentFromData(
+        {
+          'email': snapshot.data['email'],
+          'display_name': snapshot.data['display_name'],
+          'photo_url': snapshot.data['photo_url'],
+          'uid': snapshot.data['uid'],
+          'created_time': convertAlgoliaParam(
+            snapshot.data['created_time'],
+            ParamType.DateTime,
+            false,
+          ),
+          'phone_number': snapshot.data['phone_number'],
+          'Role': convertAlgoliaParam<Role>(
+            snapshot.data['Role'],
+            ParamType.Enum,
+            false,
+          ),
+          'Organization': convertAlgoliaParam(
+            snapshot.data['Organization'],
+            ParamType.DocumentReference,
+            false,
+          ),
+        },
+        UserRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<UserRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'User',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>

@@ -48,7 +48,9 @@ class TableModelRecord extends FirestoreRecord {
     _title = snapshotData['title'] as String?;
     _description = snapshotData['description'] as String?;
     _price = castToType<double>(snapshotData['price']);
-    _type = deserializeEnum<TableType>(snapshotData['type']);
+    _type = snapshotData['type'] is TableType
+        ? snapshotData['type']
+        : deserializeEnum<TableType>(snapshotData['type']);
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>

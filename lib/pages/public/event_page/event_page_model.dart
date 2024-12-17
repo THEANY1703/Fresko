@@ -89,7 +89,10 @@ class EventPageModel extends FlutterFlowModel<EventPageWidget> {
             alignment: const AlignmentDirectional(0.0, 0.0)
                 .resolve(Directionality.of(context)),
             child: GestureDetector(
-              onTap: () => FocusScope.of(dialogContext).unfocus(),
+              onTap: () {
+                FocusScope.of(dialogContext).unfocus();
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
               child: TableComposingWidget(
                 tablesRef: tables!,
               ),

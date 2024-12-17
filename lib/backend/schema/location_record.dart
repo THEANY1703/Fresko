@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import '/backend/algolia/serialization_util.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -87,6 +89,51 @@ class LocationRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       LocationRecord._(reference, mapFromFirestore(data));
+
+  static LocationRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      LocationRecord.getDocumentFromData(
+        {
+          'DisplayName': snapshot.data['DisplayName'],
+          'coordinates': convertAlgoliaParam(
+            snapshot.data,
+            ParamType.LatLng,
+            false,
+          ),
+          'Events': convertAlgoliaParam(
+            snapshot.data['Events'],
+            ParamType.DocumentReference,
+            false,
+          ),
+          'Name': snapshot.data['Name'],
+          'Image': safeGet(
+            () => snapshot.data['Image'].toList(),
+          ),
+          'Social': safeGet(
+            () => snapshot.data['Social'].toList(),
+          ),
+          'Address': snapshot.data['Address'],
+          'Description': snapshot.data['Description'],
+        },
+        LocationRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<LocationRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'Location',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>

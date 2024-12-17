@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import '/backend/algolia/serialization_util.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -87,6 +89,65 @@ class OrganizationRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       OrganizationRecord._(reference, mapFromFirestore(data));
+
+  static OrganizationRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      OrganizationRecord.getDocumentFromData(
+        {
+          'Name': snapshot.data['Name'],
+          'logo': snapshot.data['logo'],
+          'bio': snapshot.data['bio'],
+          'Events': safeGet(
+            () => convertAlgoliaParam<DocumentReference>(
+              snapshot.data['Events'],
+              ParamType.DocumentReference,
+              true,
+            ).toList(),
+          ),
+          'Social': safeGet(
+            () => snapshot.data['Social'].toList(),
+          ),
+          'Members': safeGet(
+            () => convertAlgoliaParam<DocumentReference>(
+              snapshot.data['Members'],
+              ParamType.DocumentReference,
+              true,
+            ).toList(),
+          ),
+          'Owner': safeGet(
+            () => convertAlgoliaParam<DocumentReference>(
+              snapshot.data['Owner'],
+              ParamType.DocumentReference,
+              true,
+            ).toList(),
+          ),
+          'Liked': safeGet(
+            () => convertAlgoliaParam<DocumentReference>(
+              snapshot.data['Liked'],
+              ParamType.DocumentReference,
+              true,
+            ).toList(),
+          ),
+        },
+        OrganizationRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<OrganizationRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'Organization',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>

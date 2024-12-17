@@ -11,6 +11,7 @@ import '/flutter_flow/upload_data.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'event_edit_model.dart';
 export 'event_edit_model.dart';
 
@@ -45,7 +46,7 @@ class _EventEditWidgetState extends State<EventEditWidget> {
     _model.descriptionFocusNode ??= FocusNode();
 
     _model.linksocialTextController ??=
-        TextEditingController(text: widget.eventRef?.social.first);
+        TextEditingController(text: widget.eventRef?.social.firstOrNull);
     _model.linksocialFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -61,7 +62,10 @@ class _EventEditWidgetState extends State<EventEditWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -79,29 +83,18 @@ class _EventEditWidgetState extends State<EventEditWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed(
-                'OrganizationPage',
-                queryParameters: {
-                  'organizationReference': serializeParam(
-                    currentUserDocument?.organization,
-                    ParamType.DocumentReference,
-                  ),
-                }.withoutNulls,
-              );
+              context.safePop();
             },
           ),
-          title: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-            child: Text(
-              'modifica l\'evento',
-              style: FlutterFlowTheme.of(context).displaySmall.override(
-                    fontFamily: ' Brigends Expanded',
-                    color: FlutterFlowTheme.of(context).tertiary,
-                    fontSize: 20.0,
-                    letterSpacing: 0.0,
-                    useGoogleFonts: false,
-                  ),
-            ),
+          title: Text(
+            'modifica l\'evento',
+            style: FlutterFlowTheme.of(context).displaySmall.override(
+                  fontFamily: ' Brigends Expanded',
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  fontSize: 20.0,
+                  letterSpacing: 0.0,
+                  useGoogleFonts: false,
+                ),
           ),
           actions: const [],
           centerTitle: true,
@@ -660,12 +653,10 @@ class _EventEditWidgetState extends State<EventEditWidget> {
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
+                                      child: SpinKitFadingCube(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        size: 50.0,
                                       ),
                                     ),
                                   );
@@ -794,12 +785,10 @@ class _EventEditWidgetState extends State<EventEditWidget> {
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
+                                      child: SpinKitFadingCube(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        size: 50.0,
                                       ),
                                     ),
                                   );

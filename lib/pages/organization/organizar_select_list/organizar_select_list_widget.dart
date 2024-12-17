@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'organizar_select_list_model.dart';
 export 'organizar_select_list_model.dart';
 
@@ -39,7 +40,10 @@ class _OrganizarSelectListWidgetState extends State<OrganizarSelectListWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -57,23 +61,20 @@ class _OrganizarSelectListWidgetState extends State<OrganizarSelectListWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed('ProfileAdmin');
+              context.safePop();
             },
           ),
-          title: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-            child: Text(
-              'seleziona Lista',
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              style: FlutterFlowTheme.of(context).displaySmall.override(
-                    fontFamily: ' Brigends Expanded',
-                    color: FlutterFlowTheme.of(context).tertiary,
-                    fontSize: 17.0,
-                    letterSpacing: 0.0,
-                    useGoogleFonts: false,
-                  ),
-            ),
+          title: Text(
+            'seleziona Lista',
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: FlutterFlowTheme.of(context).displaySmall.override(
+                  fontFamily: ' Brigends Expanded',
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  fontSize: 17.0,
+                  letterSpacing: 0.0,
+                  useGoogleFonts: false,
+                ),
           ),
           actions: const [],
           centerTitle: true,
@@ -137,10 +138,10 @@ class _OrganizarSelectListWidgetState extends State<OrganizarSelectListWidget> {
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).alternate,
-                                      ),
+                                    child: SpinKitFadingCube(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      size: 50.0,
                                     ),
                                   ),
                                 );
@@ -243,14 +244,11 @@ class _OrganizarSelectListWidgetState extends State<OrganizarSelectListWidget> {
                                                                 width: 50.0,
                                                                 height: 50.0,
                                                                 child:
-                                                                    CircularProgressIndicator(
-                                                                  valueColor:
-                                                                      AlwaysStoppedAnimation<
-                                                                          Color>(
-                                                                    FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                  ),
+                                                                    SpinKitFadingCube(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                  size: 50.0,
                                                                 ),
                                                               ),
                                                             );

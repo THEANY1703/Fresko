@@ -32,8 +32,11 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
     _model.emailTextController ??= TextEditingController();
     _model.emailFocusNode ??= FocusNode();
 
-    _model.phoneTextController ??= TextEditingController(text: '+39 ');
-    _model.phoneFocusNode ??= FocusNode();
+    _model.phoneTextController1 ??= TextEditingController(text: '+39 ');
+    _model.phoneFocusNode1 ??= FocusNode();
+
+    _model.phoneTextController2 ??= TextEditingController();
+    _model.phoneFocusNode2 ??= FocusNode();
 
     _model.passwordTextController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
@@ -54,7 +57,10 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -72,7 +78,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed('EnterPage');
+              context.safePop();
             },
           ),
           title: Padding(
@@ -337,8 +343,8 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                           child: SizedBox(
                             width: 200.0,
                             child: TextFormField(
-                              controller: _model.phoneTextController,
-                              focusNode: _model.phoneFocusNode,
+                              controller: _model.phoneTextController1,
+                              focusNode: _model.phoneFocusNode1,
                               autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -400,7 +406,171 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                   ),
                               cursorColor:
                                   FlutterFlowTheme.of(context).primaryText,
-                              validator: _model.phoneTextControllerValidator
+                              validator: _model.phoneTextController1Validator
+                                  .asValidator(context),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      GoRouter.of(context).prepareAuthEvent();
+                      if (_model.passwordTextController.text !=
+                          _model.passwordconfirmationTextController.text) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Passwords don\'t match!',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+
+                      final user = await authManager.createAccountWithEmail(
+                        context,
+                        _model.emailTextController.text,
+                        _model.passwordTextController.text,
+                      );
+                      if (user == null) {
+                        return;
+                      }
+
+                      await UserRecord.collection
+                          .doc(user.uid)
+                          .update(createUserRecordData(
+                            displayName: _model.usernameTextController.text,
+                            phoneNumber:
+                                (_model.phoneFocusNode1?.hasFocus ?? false)
+                                    .toString(),
+                            role: Role.Pr,
+                          ));
+
+                      FFAppState().Username =
+                          _model.usernameTextController.text;
+                      FFAppState().update(() {});
+
+                      context.pushNamedAuth('HomePage', context.mounted);
+                    },
+                    text: 'Invia SMS di verifica',
+                    options: FFButtonOptions(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: 40.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: const Color(0xC0CF3A0A),
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Lato',
+                                color: Colors.white,
+                                fontSize: 14.0,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        'OTP',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Lato',
+                              color: FlutterFlowTheme.of(context).tertiary,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15.0, 0.0, 15.0, 20.0),
+                          child: SizedBox(
+                            width: 200.0,
+                            child: TextFormField(
+                              controller: _model.phoneTextController2,
+                              focusNode: _model.phoneFocusNode2,
+                              autofocus: false,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelLarge
+                                    .override(
+                                      fontFamily: ' Brigends Expanded',
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
+                                      letterSpacing: 0.0,
+                                      useGoogleFonts: false,
+                                    ),
+                                hintText: 'es. +39 3491000000',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Lato',
+                                      color: const Color(0xFFA09F99),
+                                      letterSpacing: 0.0,
+                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                filled: true,
+                                fillColor: const Color(0xFFD8D8DD),
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Lato',
+                                    color: const Color(0xFFA09F99),
+                                    letterSpacing: 0.0,
+                                  ),
+                              cursorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              validator: _model.phoneTextController2Validator
                                   .asValidator(context),
                             ),
                           ),
@@ -685,7 +855,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                           .update(createUserRecordData(
                             displayName: _model.usernameTextController.text,
                             phoneNumber:
-                                (_model.phoneFocusNode?.hasFocus ?? false)
+                                (_model.phoneFocusNode1?.hasFocus ?? false)
                                     .toString(),
                             role: Role.Pr,
                           ));
@@ -762,6 +932,69 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      GoRouter.of(context).prepareAuthEvent();
+                      if (_model.passwordTextController.text !=
+                          _model.passwordconfirmationTextController.text) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Passwords don\'t match!',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+
+                      final user = await authManager.createAccountWithEmail(
+                        context,
+                        _model.emailTextController.text,
+                        _model.passwordTextController.text,
+                      );
+                      if (user == null) {
+                        return;
+                      }
+
+                      await UserRecord.collection
+                          .doc(user.uid)
+                          .update(createUserRecordData(
+                            displayName: _model.usernameTextController.text,
+                            phoneNumber:
+                                (_model.phoneFocusNode1?.hasFocus ?? false)
+                                    .toString(),
+                            role: Role.Pr,
+                          ));
+
+                      FFAppState().Username =
+                          _model.usernameTextController.text;
+                      FFAppState().update(() {});
+
+                      context.pushNamedAuth('HomePage', context.mounted);
+                    },
+                    text: 'Registrati',
+                    options: FFButtonOptions(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: 40.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: const Color(0xC0CF3A0A),
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Lato',
+                                color: Colors.white,
+                                fontSize: 14.0,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
                   ),
                 ),
               ],

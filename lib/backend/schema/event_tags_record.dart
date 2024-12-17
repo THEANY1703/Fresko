@@ -16,19 +16,19 @@ class EventTagsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "event" field.
-  DocumentReference? _event;
-  DocumentReference? get event => _event;
-  bool hasEvent() => _event != null;
-
   // "tag" field.
   List<DocumentReference>? _tag;
   List<DocumentReference> get tag => _tag ?? const [];
   bool hasTag() => _tag != null;
 
+  // "event" field.
+  DocumentReference? _event;
+  DocumentReference? get event => _event;
+  bool hasEvent() => _event != null;
+
   void _initializeFields() {
-    _event = snapshotData['event'] as DocumentReference?;
     _tag = getDataList(snapshotData['tag']);
+    _event = snapshotData['event'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -83,11 +83,11 @@ class EventTagsRecordDocumentEquality implements Equality<EventTagsRecord> {
   @override
   bool equals(EventTagsRecord? e1, EventTagsRecord? e2) {
     const listEquality = ListEquality();
-    return e1?.event == e2?.event && listEquality.equals(e1?.tag, e2?.tag);
+    return listEquality.equals(e1?.tag, e2?.tag) && e1?.event == e2?.event;
   }
 
   @override
-  int hash(EventTagsRecord? e) => const ListEquality().hash([e?.event, e?.tag]);
+  int hash(EventTagsRecord? e) => const ListEquality().hash([e?.tag, e?.event]);
 
   @override
   bool isValidKey(Object? o) => o is EventTagsRecord;

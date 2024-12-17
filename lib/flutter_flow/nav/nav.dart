@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
@@ -323,10 +324,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const AdminSelectLocationWidget(),
         ),
         FFRoute(
-          name: 'LocationPage',
-          path: '/locationPage',
+          name: 'HomeLocationPage',
+          path: '/HomeLocationPage',
           requireAuth: true,
-          builder: (context, params) => const LocationPageWidget(),
+          builder: (context, params) => const HomeLocationPageWidget(),
         ),
         FFRoute(
           name: 'OrganizerAdd',
@@ -417,8 +418,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               isList: false,
               collectionNamePath: ['Organization'],
             ),
-            prlist: params.getParam(
-              'prlist',
+            prList: params.getParam(
+              'prList',
               ParamType.DocumentReference,
               isList: false,
               collectionNamePath: ['PrList'],
@@ -470,7 +471,46 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'manageticket',
           path: '/manageticket',
-          builder: (context, params) => const ManageticketWidget(),
+          builder: (context, params) => ManageticketWidget(
+            eventRef: params.getParam(
+              'eventRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['Event'],
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'SearchPage',
+          path: '/searchPage',
+          builder: (context, params) => const SearchPageWidget(),
+        ),
+        FFRoute(
+          name: 'LocationPage',
+          path: '/locationPage',
+          builder: (context, params) => LocationPageWidget(
+            locationRef: params.getParam(
+              'locationRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['Location'],
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'tagPage',
+          path: '/tagPage',
+          builder: (context, params) => TagPageWidget(
+            tagSelected: params.getParam(
+              'tagSelected',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'NotificationPage',
+          path: '/notificationPage',
+          builder: (context, params) => const NotificationPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -659,10 +699,9 @@ class FFRoute {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).alternate,
-                      ),
+                    child: SpinKitFadingCube(
+                      color: FlutterFlowTheme.of(context).alternate,
+                      size: 50.0,
                     ),
                   ),
                 )
@@ -708,7 +747,12 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => const TransitionInfo(
+        hasTransition: true,
+        transitionType: PageTransitionType.scale,
+        alignment: Alignment.bottomCenter,
+        duration: Duration(milliseconds: 300),
+      );
 }
 
 class _RouteErrorBuilder extends StatefulWidget {

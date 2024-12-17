@@ -68,7 +68,9 @@ class TablesRecord extends FirestoreRecord {
     _event = snapshotData['Event'] as DocumentReference?;
     _prList = snapshotData['PrList'] as DocumentReference?;
     _isApproved = snapshotData['IsApproved'] as bool?;
-    _typeTable = deserializeEnum<TableType>(snapshotData['TypeTable']);
+    _typeTable = snapshotData['TypeTable'] is TableType
+        ? snapshotData['TypeTable']
+        : deserializeEnum<TableType>(snapshotData['TypeTable']);
     _members = getDataList(snapshotData['Members']);
     _capacity = castToType<int>(snapshotData['Capacity']);
     _isFull = snapshotData['IsFull'] as bool?;

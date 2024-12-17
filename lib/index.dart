@@ -1,7 +1,8 @@
 // Export pages
 export '/pages/public/login_page/login_page_widget.dart' show LoginPageWidget;
 export '/pages/public/home_page/home_page_widget.dart' show HomePageWidget;
-export '/pages/profile_user/profile_user_widget.dart' show ProfileUserWidget;
+export '/pages/public/profile_user/profile_user_widget.dart'
+    show ProfileUserWidget;
 export '/pages/public/enter_page/enter_page_widget.dart' show EnterPageWidget;
 export '/pages/public/register_page/register_page_widget.dart'
     show RegisterPageWidget;
@@ -17,7 +18,7 @@ export '/pages/organization/organizer_create_list/organizer_create_list_widget.d
     show OrganizerCreateListWidget;
 export '/pages/organization/organization_create/organization_create_widget.dart'
     show OrganizationCreateWidget;
-export '/pages/profile_user_public/profile_user_public_widget.dart'
+export '/pages/public/profile_user_public/profile_user_public_widget.dart'
     show ProfileUserPublicWidget;
 export '/pages/organization/organization_edit/organization_edit_widget.dart'
     show OrganizationEditWidget;
@@ -44,8 +45,8 @@ export '/pages/admin/admin_add_founder/admin_add_founder_widget.dart'
     show AdminAddFounderWidget;
 export '/pages/admin/admin_select_location/admin_select_location_widget.dart'
     show AdminSelectLocationWidget;
-export '/pages/public/location_page/location_page_widget.dart'
-    show LocationPageWidget;
+export '/pages/public/home_location_page/home_location_page_widget.dart'
+    show HomeLocationPageWidget;
 export '/pages/admin/organizer_add/organizer_add_widget.dart'
     show OrganizerAddWidget;
 export '/pages/admin/admin_select_tag/admin_select_tag_widget.dart'
@@ -56,7 +57,8 @@ export '/pages/pr/pr_page/pr_page_widget.dart' show PrPageWidget;
 export '/pages/public/event_page/event_page_widget.dart' show EventPageWidget;
 export '/pages/organization/organizer_select_event/organizer_select_event_widget.dart'
     show OrganizerSelectEventWidget;
-export '/analytichs/analytichs_widget.dart' show AnalytichsWidget;
+export '/pages/organization/analytichs/analytichs_widget.dart'
+    show AnalytichsWidget;
 export '/pages/public/edit_profile/edit_profile_widget.dart'
     show EditProfileWidget;
 export '/pages/admin/profile_god/profile_god_widget.dart' show ProfileGodWidget;
@@ -70,3 +72,9 @@ export '/pages/organization/organizar_select_list/organizar_select_list_widget.d
     show OrganizarSelectListWidget;
 export '/pages/organization/manageticket/manageticket_widget.dart'
     show ManageticketWidget;
+export '/search_page/search_page_widget.dart' show SearchPageWidget;
+export '/pages/public/location_page/location_page_widget.dart'
+    show LocationPageWidget;
+export '/tag_page/tag_page_widget.dart' show TagPageWidget;
+export '/notification_page/notification_page_widget.dart'
+    show NotificationPageWidget;

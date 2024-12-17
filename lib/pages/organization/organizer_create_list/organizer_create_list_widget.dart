@@ -11,6 +11,7 @@ import '/flutter_flow/form_field_controller.dart';
 import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'organizer_create_list_model.dart';
 export 'organizer_create_list_model.dart';
 
@@ -50,7 +51,10 @@ class _OrganizerCreateListWidgetState extends State<OrganizerCreateListWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -71,17 +75,15 @@ class _OrganizerCreateListWidgetState extends State<OrganizerCreateListWidget> {
               context.safePop();
             },
           ),
-          title: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-            child: Text(
-              'Crea la lista',
-              style: FlutterFlowTheme.of(context).displaySmall.override(
-                    fontFamily: ' Brigends Expanded',
-                    color: FlutterFlowTheme.of(context).tertiary,
-                    letterSpacing: 0.0,
-                    useGoogleFonts: false,
-                  ),
-            ),
+          title: Text(
+            'Crea lista',
+            style: FlutterFlowTheme.of(context).displaySmall.override(
+                  fontFamily: ' Brigends Expanded',
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  fontSize: 18.0,
+                  letterSpacing: 0.0,
+                  useGoogleFonts: false,
+                ),
           ),
           actions: const [],
           centerTitle: true,
@@ -287,12 +289,10 @@ class _OrganizerCreateListWidgetState extends State<OrganizerCreateListWidget> {
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
+                                      child: SpinKitFadingCube(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        size: 50.0,
                                       ),
                                     ),
                                   );
@@ -391,12 +391,10 @@ class _OrganizerCreateListWidgetState extends State<OrganizerCreateListWidget> {
                                       child: SizedBox(
                                         width: 50.0,
                                         height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .alternate,
-                                          ),
+                                        child: SpinKitFadingCube(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          size: 50.0,
                                         ),
                                       ),
                                     );
@@ -483,7 +481,7 @@ class _OrganizerCreateListWidgetState extends State<OrganizerCreateListWidget> {
                                                               _model
                                                                   .selectPrSelectedOption)
                                                           .toList()
-                                                          .first
+                                                          .firstOrNull!
                                                           .reference);
                                               _model.addToPrEditor(
                                                   _model.prSelected!.reference);
@@ -633,13 +631,11 @@ class _OrganizerCreateListWidgetState extends State<OrganizerCreateListWidget> {
                                             child: SizedBox(
                                               width: 50.0,
                                               height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                                ),
+                                              child: SpinKitFadingCube(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                size: 50.0,
                                               ),
                                             ),
                                           );

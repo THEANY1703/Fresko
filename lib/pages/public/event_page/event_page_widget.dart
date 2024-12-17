@@ -4,15 +4,18 @@ import '/backend/schema/enums/enums.dart';
 import '/components/dialog_ticket/dialog_ticket_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_static_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flip_card/flip_card.dart';
+import 'package:mapbox_search/mapbox_search.dart' as mapbox;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:share_plus/share_plus.dart';
 import 'event_page_model.dart';
 export 'event_page_model.dart';
@@ -106,10 +109,9 @@ class _EventPageWidgetState extends State<EventPageWidget>
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    FlutterFlowTheme.of(context).alternate,
-                  ),
+                child: SpinKitFadingCube(
+                  color: FlutterFlowTheme.of(context).alternate,
+                  size: 50.0,
                 ),
               ),
             ),
@@ -119,7 +121,10 @@ class _EventPageWidgetState extends State<EventPageWidget>
         final eventPageEventRecord = snapshot.data!;
 
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -178,10 +183,10 @@ class _EventPageWidgetState extends State<EventPageWidget>
                             ),
                             gradient: LinearGradient(
                               colors: [
-                                const Color(0x31FFF9F9),
+                                const Color(0x17FFF9F9),
                                 FlutterFlowTheme.of(context).primary
                               ],
-                              stops: const [0.0, 0.4],
+                              stops: const [0.0, 0.6],
                               begin: const AlignmentDirectional(0.0, -1.0),
                               end: const AlignmentDirectional(0, 1.0),
                             ),
@@ -241,14 +246,11 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                               child: SizedBox(
                                                 width: 50.0,
                                                 height: 50.0,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                  ),
+                                                child: SpinKitFadingCube(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                  size: 50.0,
                                                 ),
                                               ),
                                             );
@@ -368,10 +370,7 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                                       barcode: Barcode.qrCode(),
                                                       width: 200.0,
                                                       height: 200.0,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
+                                                      color: Colors.white,
                                                       backgroundColor:
                                                           Colors.transparent,
                                                       errorBuilder:
@@ -441,16 +440,6 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                     }
                                   },
                                 ),
-                                Text(
-                                  eventPageEventRecord.name,
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleLarge
-                                      .override(
-                                        fontFamily: 'Lato',
-                                        fontSize: 25.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -488,7 +477,7 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(0.0, 0.0,
                                                               0.0, 0.0),
-                                                  color: const Color(0xAFEA5928),
+                                                  color: const Color(0xA44B7EFF),
                                                   textStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -510,9 +499,20 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                       ),
                                   ],
                                 ),
+                                Text(
+                                  eventPageEventRecord.name,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Lato',
+                                        fontSize: 25.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 5.0),
+                                      0.0, 10.0, 0.0, 17.0),
                                   child: Text(
                                     functions.formatDateTime(
                                         eventPageEventRecord.dateEvent!),
@@ -520,8 +520,7 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Lato',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiary,
+                                          color: const Color(0xFF4B7EFF),
                                           fontSize: 15.0,
                                           letterSpacing: 0.0,
                                         ),
@@ -529,7 +528,205 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 12.0),
+                                      0.0, 0.0, 0.0, 12.0),
+                                  child: StreamBuilder<LocationRecord>(
+                                    stream: LocationRecord.getDocument(
+                                        eventPageEventRecord.location!),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            child: SpinKitFadingCube(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 50.0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+
+                                      final propertyDetailsLocationRecord =
+                                          snapshot.data!;
+
+                                      return Container(
+                                        width: double.infinity,
+                                        constraints: const BoxConstraints(
+                                          maxWidth: 570.0,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(26.0),
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiary,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 4.0),
+                                                    child: Text(
+                                                      propertyDetailsLocationRecord
+                                                          .displayName,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .titleLarge
+                                                          .override(
+                                                            fontFamily: 'Lato',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            1.0, 0.0),
+                                                    child: FFButtonWidget(
+                                                      onPressed: () {
+                                                        print(
+                                                            'Button pressed ...');
+                                                      },
+                                                      text: 'Scopri',
+                                                      options: FFButtonOptions(
+                                                        height: 21.0,
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0),
+                                                        iconPadding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Lato',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                        elevation: 0.0,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 5.0),
+                                                child: Text(
+                                                  propertyDetailsLocationRecord
+                                                      .address,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Lato',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                              ),
+                                              const Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  FlutterFlowStaticMap(
+                                                    location: LatLng(
+                                                        37.50143277842129,
+                                                        15.084216683540053),
+                                                    apiKey:
+                                                        'pk.eyJ1IjoidGhlYW55MTcwMyIsImEiOiJjbTJhanZvcWUwaTF2MnFzZTE4aW5nNGd3In0.rrr0CP5fvyA2cT2lNDGiCQ',
+                                                    style:
+                                                        mapbox.MapBoxStyle.Dark,
+                                                    width: 327.0,
+                                                    height: 50.0,
+                                                    fit: BoxFit.cover,
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      bottomLeft:
+                                                          Radius.circular(0.0),
+                                                      bottomRight:
+                                                          Radius.circular(0.0),
+                                                      topLeft:
+                                                          Radius.circular(0.0),
+                                                      topRight:
+                                                          Radius.circular(0.0),
+                                                    ),
+                                                    markerUrl:
+                                                        'mapbox://styles/theany1703/cm2ak7z8600qv01r217mi0e35',
+                                                    zoom: 16,
+                                                    tilt: 0,
+                                                    rotation: 0,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Align(
+                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 30.0, 0.0, 5.0),
+                                    child: Text(
+                                      'Dettagli evento ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Lato',
+                                            color: Colors.white,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      60.0, 8.0, 60.0, 12.0),
                                   child: Text(
                                     eventPageEventRecord.description,
                                     style: FlutterFlowTheme.of(context)
@@ -542,11 +739,12 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                   ),
                                 ),
                                 Text(
-                                  'Organizzatori',
+                                  'Organizzato da',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
                                       .override(
                                         fontFamily: ' Brigends Expanded',
+                                        fontSize: 13.0,
                                         letterSpacing: 0.0,
                                         useGoogleFonts: false,
                                       ),
@@ -582,14 +780,11 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                                           width: 50.0,
                                                           height: 50.0,
                                                           child:
-                                                              CircularProgressIndicator(
-                                                            valueColor:
-                                                                AlwaysStoppedAnimation<
-                                                                    Color>(
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .alternate,
-                                                            ),
+                                                              SpinKitFadingCube(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .alternate,
+                                                            size: 50.0,
                                                           ),
                                                         ),
                                                       );
@@ -762,9 +957,13 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                                     .resolve(Directionality.of(
                                                         context)),
                                                 child: GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          dialogContext)
-                                                      .unfocus(),
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
                                                   child: DialogTicketWidget(
                                                     eventReference:
                                                         widget.eventId!,
@@ -775,7 +974,7 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                           );
                                         },
                                         child: Container(
-                                          width: double.infinity,
+                                          width: 200.0,
                                           height: 40.0,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
@@ -791,19 +990,19 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                               )
                                             ],
                                             borderRadius:
-                                                BorderRadius.circular(24.0),
+                                                BorderRadius.circular(14.0),
                                           ),
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Text(
-                                            'Prenota i biglietti',
+                                            'Prenota il tuo biglietto',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
+                                                .bodyMedium
                                                 .override(
-                                                  fontFamily:
-                                                      ' Brigends Expanded',
+                                                  fontFamily: 'Lato',
+                                                  fontSize: 18.0,
                                                   letterSpacing: 0.0,
-                                                  useGoogleFonts: false,
+                                                  fontWeight: FontWeight.w900,
                                                 ),
                                           ),
                                         ),
@@ -831,19 +1030,19 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                           ),
                                         )
                                       ],
-                                      borderRadius: BorderRadius.circular(24.0),
+                                      borderRadius: BorderRadius.circular(15.0),
                                     ),
                                     alignment: const AlignmentDirectional(0.0, 0.0),
                                     child: Text(
-                                      'Clicca sulla locandi e visualizza il tuo ticket',
+                                      'Clicca sulla locandina e visualizza il tuo ticket',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyLarge
+                                          .bodyMedium
                                           .override(
-                                            fontFamily: ' Brigends Expanded',
-                                            fontSize: 14.0,
+                                            fontFamily: 'Lato',
+                                            fontSize: 17.0,
                                             letterSpacing: 0.0,
-                                            useGoogleFonts: false,
+                                            fontWeight: FontWeight.w900,
                                           ),
                                     ),
                                   ),

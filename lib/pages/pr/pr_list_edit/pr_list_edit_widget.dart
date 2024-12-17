@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'pr_list_edit_model.dart';
 export 'pr_list_edit_model.dart';
 
@@ -57,10 +58,9 @@ class _PrListEditWidgetState extends State<PrListEditWidget> {
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    FlutterFlowTheme.of(context).alternate,
-                  ),
+                child: SpinKitFadingCube(
+                  color: FlutterFlowTheme.of(context).alternate,
+                  size: 50.0,
                 ),
               ),
             ),
@@ -70,7 +70,10 @@ class _PrListEditWidgetState extends State<PrListEditWidget> {
         final prListEditPrListRecord = snapshot.data!;
 
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -88,22 +91,19 @@ class _PrListEditWidgetState extends State<PrListEditWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  context.pushNamed('EnterPage');
+                  context.safePop();
                 },
               ),
-              title: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-                child: Text(
-                  'modifica lista',
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).displaySmall.override(
-                        fontFamily: ' Brigends Expanded',
-                        color: FlutterFlowTheme.of(context).tertiary,
-                        fontSize: 19.0,
-                        letterSpacing: 0.0,
-                        useGoogleFonts: false,
-                      ),
-                ),
+              title: Text(
+                'modifica lista',
+                textAlign: TextAlign.center,
+                style: FlutterFlowTheme.of(context).displaySmall.override(
+                      fontFamily: ' Brigends Expanded',
+                      color: FlutterFlowTheme.of(context).tertiary,
+                      fontSize: 19.0,
+                      letterSpacing: 0.0,
+                      useGoogleFonts: false,
+                    ),
               ),
               actions: const [],
               centerTitle: true,
@@ -167,12 +167,10 @@ class _PrListEditWidgetState extends State<PrListEditWidget> {
                                         child: SizedBox(
                                           width: 50.0,
                                           height: 50.0,
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              FlutterFlowTheme.of(context)
-                                                  .alternate,
-                                            ),
+                                          child: SpinKitFadingCube(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 50.0,
                                           ),
                                         ),
                                       );
@@ -485,13 +483,12 @@ class _PrListEditWidgetState extends State<PrListEditWidget> {
                                                                     height:
                                                                         50.0,
                                                                     child:
-                                                                        CircularProgressIndicator(
-                                                                      valueColor:
-                                                                          AlwaysStoppedAnimation<
-                                                                              Color>(
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                      ),
+                                                                        SpinKitFadingCube(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                      size:
+                                                                          50.0,
                                                                     ),
                                                                   ),
                                                                 );
@@ -573,7 +570,10 @@ class _PrListEditWidgetState extends State<PrListEditWidget> {
                                                                                 const AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
                                                                             child:
                                                                                 GestureDetector(
-                                                                              onTap: () => FocusScope.of(dialogContext).unfocus(),
+                                                                              onTap: () {
+                                                                                FocusScope.of(dialogContext).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
                                                                               child: AlertDialogWidget(
                                                                                 title: 'SICURO?',
                                                                                 description: 'Sei sicuro di voler eliminare ',
