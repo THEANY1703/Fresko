@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/schema/enums/enums.dart';
+import '/components/dialog/dialog_widget.dart';
 import '/components/dialog_table/dialog_table_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -143,145 +144,185 @@ class _DialogTicketWidgetState extends State<DialogTicketWidget> {
                     itemBuilder: (context, listViewIndex) {
                       final listViewTicketModelsRecord =
                           listViewTicketModelsRecordList[listViewIndex];
-                      return Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            16.0, 8.0, 16.0, 12.0),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            if ((listViewTicketModelsRecord.type ==
-                                    TicketType.Normale) ||
-                                (listViewTicketModelsRecord.type ==
-                                    TicketType.Vip)) {
-                              if (listViewTicketModelsRecord.type ==
-                                  TicketType.Normale) {
-                                await TicketRecord.collection
-                                    .doc()
-                                    .set(createTicketRecordData(
-                                      title: listViewTicketModelsRecord.title,
-                                      price: listViewTicketModelsRecord.price,
-                                      event: widget.eventReference,
-                                      prList: widget.prList,
-                                      uniqueCode: functions.getUnicode(
-                                          listViewTicketModelsRecord.name,
-                                          listViewTicketModelsRecord.price,
-                                          currentUserDisplayName),
-                                      user: currentUserReference,
-                                      isApproved: true,
-                                      typeTicket:
-                                          listViewTicketModelsRecord.type,
-                                    ));
+                      return Builder(
+                        builder: (context) => Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16.0, 8.0, 16.0, 12.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (dialogContext) {
+                                  return Dialog(
+                                    elevation: 0,
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.transparent,
+                                    alignment: const AlignmentDirectional(0.0, 0.0)
+                                        .resolve(Directionality.of(context)),
+                                    child: DialogWidget(
+                                      title:
+                                          'Sei sicuro di voler prenotare il ticket? ',
+                                      dettails:
+                                          'se cliccli conferma invierai il tuo biglietto definitivamente, non potrai prenotare più biglietti',
+                                      confirmCB: () async {
+                                        if ((listViewTicketModelsRecord.type ==
+                                                TicketType.Normale) ||
+                                            (listViewTicketModelsRecord.type ==
+                                                TicketType.Vip)) {
+                                          if (listViewTicketModelsRecord.type ==
+                                              TicketType.Normale) {
+                                            await TicketRecord.collection
+                                                .doc()
+                                                .set(createTicketRecordData(
+                                                  title:
+                                                      listViewTicketModelsRecord
+                                                          .title,
+                                                  price:
+                                                      listViewTicketModelsRecord
+                                                          .price,
+                                                  event: widget.eventReference,
+                                                  prList: widget.prList,
+                                                  uniqueCode: functions.getUnicode(
+                                                      listViewTicketModelsRecord
+                                                          .name,
+                                                      listViewTicketModelsRecord
+                                                          .price,
+                                                      currentUserDisplayName),
+                                                  user: currentUserReference,
+                                                  isApproved: true,
+                                                  typeTicket:
+                                                      listViewTicketModelsRecord
+                                                          .type,
+                                                ));
 
-                                await widget.eventReference!.update({
-                                  ...mapToFirestore(
-                                    {
-                                      'Participants': FieldValue.arrayUnion(
-                                          [currentUserReference]),
-                                      'totalParticipants':
-                                          FieldValue.increment(1),
-                                    },
-                                  ),
-                                });
-                                await Future.delayed(
-                                    const Duration(milliseconds: 500));
-                              } else {
-                                await TicketRecord.collection
-                                    .doc()
-                                    .set(createTicketRecordData(
-                                      title: listViewTicketModelsRecord.title,
-                                      price: listViewTicketModelsRecord.price,
-                                      event: widget.eventReference,
-                                      prList: widget.prList,
-                                      uniqueCode: functions.getUnicode(
-                                          listViewTicketModelsRecord.name,
-                                          listViewTicketModelsRecord.price,
-                                          currentUserDisplayName),
-                                      user: currentUserReference,
-                                      isApproved: false,
-                                      typeTicket:
-                                          listViewTicketModelsRecord.type,
-                                    ));
-                                await Future.delayed(
-                                    const Duration(milliseconds: 500));
-                              }
-
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 50.0,
-                            constraints: const BoxConstraints(
-                              minWidth: 50.0,
-                              minHeight: 50.0,
-                              maxWidth: 250.0,
-                              maxHeight: 50.0,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xB3EA5928),
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 5.0, 0.0, 0.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            15.0, 0.0, 0.0, 0.0),
-                                        child: Text(
-                                          listViewTicketModelsRecord.title,
-                                          textAlign: TextAlign.start,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Lato',
-                                                fontSize: 17.0,
-                                                letterSpacing: 0.0,
+                                            await widget.eventReference!
+                                                .update({
+                                              ...mapToFirestore(
+                                                {
+                                                  'Participants':
+                                                      FieldValue.arrayUnion([
+                                                    currentUserReference
+                                                  ]),
+                                                  'totalParticipants':
+                                                      FieldValue.increment(1),
+                                                },
                                               ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 20.0, 0.0),
-                                        child: Text(
-                                          '${listViewTicketModelsRecord.price.toString()}€',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Lato',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        15.0, 3.0, 0.0, 0.0),
-                                    child: Text(
-                                      listViewTicketModelsRecord.description,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Lato',
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                            });
+                                            await Future.delayed(const Duration(
+                                                milliseconds: 500));
+                                          } else {
+                                            await TicketRecord.collection
+                                                .doc()
+                                                .set(createTicketRecordData(
+                                                  title:
+                                                      listViewTicketModelsRecord
+                                                          .title,
+                                                  price:
+                                                      listViewTicketModelsRecord
+                                                          .price,
+                                                  event: widget.eventReference,
+                                                  prList: widget.prList,
+                                                  uniqueCode: functions.getUnicode(
+                                                      listViewTicketModelsRecord
+                                                          .name,
+                                                      listViewTicketModelsRecord
+                                                          .price,
+                                                      currentUserDisplayName),
+                                                  user: currentUserReference,
+                                                  isApproved: false,
+                                                  typeTicket:
+                                                      listViewTicketModelsRecord
+                                                          .type,
+                                                ));
+                                            await Future.delayed(const Duration(
+                                                milliseconds: 500));
+                                          }
+                                        }
+                                      },
                                     ),
-                                  ),
-                                ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              height: 50.0,
+                              constraints: const BoxConstraints(
+                                minWidth: 50.0,
+                                minHeight: 50.0,
+                                maxWidth: 250.0,
+                                maxHeight: 50.0,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xB3EA5928),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 5.0, 0.0, 0.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  15.0, 0.0, 0.0, 0.0),
+                                          child: Text(
+                                            listViewTicketModelsRecord.title,
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Lato',
+                                                  fontSize: 17.0,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 20.0, 0.0),
+                                          child: Text(
+                                            '${listViewTicketModelsRecord.price.toString()}€',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Lato',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          15.0, 3.0, 0.0, 0.0),
+                                      child: Text(
+                                        listViewTicketModelsRecord.description,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Lato',
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

@@ -1,5 +1,5 @@
 // Export pages
-export '/pages/public/login_page/login_page_widget.dart' show LoginPageWidget;
+export '/pages/login_page/login_page_widget.dart' show LoginPageWidget;
 export '/pages/public/home_page/home_page_widget.dart' show HomePageWidget;
 export '/pages/public/profile_user/profile_user_widget.dart'
     show ProfileUserWidget;
@@ -10,8 +10,8 @@ export '/pages/public/password_reset_page/password_reset_page_widget.dart'
     show PasswordResetPageWidget;
 export '/pages/public/event_page_backup/event_page_backup_widget.dart'
     show EventPageBackupWidget;
-export '/pages/organization/organization_page/organization_page_widget.dart'
-    show OrganizationPageWidget;
+export '/pages/organization/organization_pagev3/organization_pagev3_widget.dart'
+    show OrganizationPagev3Widget;
 export '/pages/organization/event_create/event_create_widget.dart'
     show EventCreateWidget;
 export '/pages/organization/organizer_create_list/organizer_create_list_widget.dart'
@@ -79,5 +79,5 @@ export '/tag_page/tag_page_widget.dart' show TagPageWidget;
 export '/notification_page/notification_page_widget.dart'
     show NotificationPageWidget;
 export '/feedback/feedback_widget.dart' show FeedbackWidget;
-export '/pages/organization/organization_page_copy/organization_page_copy_widget.dart'
-    show OrganizationPageCopyWidget;
+export '/pages/organization/organization_page/organization_page_widget.dart'
+    show OrganizationPageWidget;

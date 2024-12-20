@@ -36,7 +36,7 @@ class EventEditModel extends FlutterFlowModel<EventEditWidget> {
   TextEditingController? linksocialTextController;
   String? Function(BuildContext, String?)? linksocialTextControllerValidator;
   // Stores action output result for [Firestore Query - Query a collection] action in Confirmation widget.
-  LocationRecord? locRef;
+  LocationRecord? locationRef;
   // Stores action output result for [Firestore Query - Query a collection] action in Confirmation widget.
   EventTagsRecord? selected;
 

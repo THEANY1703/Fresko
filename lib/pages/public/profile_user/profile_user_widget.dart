@@ -483,7 +483,7 @@ class _ProfileUserWidgetState extends State<ProfileUserWidget>
                               context.pushNamed('OrganizationCreate');
                             } else {
                               context.goNamed(
-                                'OrganizationPageCopy',
+                                'OrganizationPage',
                                 queryParameters: {
                                   'organizationReference': serializeParam(
                                     currentUserDocument?.organization,

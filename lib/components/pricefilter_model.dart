@@ -1,12 +1,12 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'date_picker_widget.dart' show DatePickerWidget;
-import 'package:flutter/cupertino.dart';
+import 'pricefilter_widget.dart' show PricefilterWidget;
 import 'package:flutter/material.dart';
 
-class DatePickerModel extends FlutterFlowModel<DatePickerWidget> {
+class PricefilterModel extends FlutterFlowModel<PricefilterWidget> {
   ///  State fields for stateful widgets in this component.
 
-  DateTime? datePicked;
+  // State field(s) for Slider widget.
+  double? sliderValue;
 
   @override
   void initState(BuildContext context) {}

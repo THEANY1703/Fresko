@@ -1,6 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'date_picker_model.dart';
 export 'date_picker_model.dart';
@@ -53,7 +55,11 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                   height: 80.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).accent2,
-                    borderRadius: BorderRadius.circular(13.0),
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(
+                      color: FlutterFlowTheme.of(context).alternate,
+                      width: 6.0,
+                    ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -74,55 +80,73 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                         alignment: const AlignmentDirectional(1.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            final datePickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.fromMicrosecondsSinceEpoch(
-                                  1057010400000000),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime.fromMicrosecondsSinceEpoch(
-                                  1057010400000000),
-                              builder: (context, child) {
-                                return wrapInMaterialDatePickerTheme(
-                                  context,
-                                  child!,
-                                  headerBackgroundColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  headerForegroundColor:
-                                      FlutterFlowTheme.of(context).info,
-                                  headerTextStyle: FlutterFlowTheme.of(context)
-                                      .headlineLarge
-                                      .override(
-                                        fontFamily: ' Brigends Expanded',
-                                        fontSize: 32.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                        useGoogleFonts: false,
+                            await showModalBottomSheet<bool>(
+                                context: context,
+                                builder: (context) {
+                                  final datePickedCupertinoTheme =
+                                      CupertinoTheme.of(context);
+                                  return ScrollConfiguration(
+                                    behavior:
+                                        const MaterialScrollBehavior().copyWith(
+                                      dragDevices: {
+                                        PointerDeviceKind.mouse,
+                                        PointerDeviceKind.touch,
+                                        PointerDeviceKind.stylus,
+                                        PointerDeviceKind.unknown
+                                      },
+                                    ),
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              3,
+                                      width: MediaQuery.of(context).size.width,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      child: CupertinoTheme(
+                                        data:
+                                            datePickedCupertinoTheme.copyWith(
+                                          textTheme: datePickedCupertinoTheme
+                                              .textTheme
+                                              .copyWith(
+                                            dateTimePickerTextStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineMedium
+                                                    .override(
+                                                      fontFamily:
+                                                          ' Brigends Expanded',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      letterSpacing: 0.0,
+                                                      useGoogleFonts: false,
+                                                    ),
+                                          ),
+                                        ),
+                                        child: CupertinoDatePicker(
+                                          mode: CupertinoDatePickerMode.date,
+                                          minimumDate: DateTime
+                                              .fromMicrosecondsSinceEpoch(
+                                                  1057010400000000),
+                                          initialDateTime: DateTime
+                                              .fromMicrosecondsSinceEpoch(
+                                                  1057010400000000),
+                                          maximumDate: DateTime
+                                              .fromMicrosecondsSinceEpoch(
+                                                  1057010400000000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          use24hFormat: false,
+                                          onDateTimeChanged: (newDateTime) =>
+                                              safeSetState(() {
+                                            _model.datePicked = newDateTime;
+                                          }),
+                                        ),
                                       ),
-                                  pickerBackgroundColor:
-                                      FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                  pickerForegroundColor:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  selectedDateTimeBackgroundColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  selectedDateTimeForegroundColor:
-                                      FlutterFlowTheme.of(context).tertiary,
-                                  actionButtonForegroundColor:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  iconSize: 24.0,
-                                );
-                              },
-                            );
-
-                            if (datePickedDate != null) {
-                              safeSetState(() {
-                                _model.datePicked = DateTime(
-                                  datePickedDate.year,
-                                  datePickedDate.month,
-                                  datePickedDate.day,
-                                );
-                              });
-                            }
+                                    ),
+                                  );
+                                });
                           },
                           text: 'Inserisci',
                           options: FFButtonOptions(

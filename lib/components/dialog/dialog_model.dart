@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'tag_page_widget.dart' show TagPageWidget;
+import 'dialog_widget.dart' show DialogWidget;
 import 'package:flutter/material.dart';
 
-class TagPageModel extends FlutterFlowModel<TagPageWidget> {
+class DialogModel extends FlutterFlowModel<DialogWidget> {
   @override
   void initState(BuildContext context) {}
 

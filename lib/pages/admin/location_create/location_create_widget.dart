@@ -1,6 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/components/dialog/dialog_widget.dart';
 import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -778,49 +779,126 @@ class _LocationCreateWidgetState extends State<LocationCreateWidget> {
                     ),
                     Align(
                       alignment: const AlignmentDirectional(0.0, 1.0),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            30.0, 0.0, 30.0, 40.0),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            await LocationRecord.collection.doc().set({
-                              ...createLocationRecordData(
-                                displayName:
-                                    _model.titleLocationTextController.text,
-                                address:
-                                    _model.addressLocationTextController.text,
-                                description:
-                                    _model.descriptionTextController.text,
-                              ),
-                              ...mapToFirestore(
-                                {
-                                  'Image': [_model.uploadedFileUrl],
-                                  'Social': [
-                                    _model.linksocialTextController.text
-                                  ],
+                      child: Builder(
+                        builder: (context) => Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              30.0, 0.0, 30.0, 40.0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (dialogContext) {
+                                  return Dialog(
+                                    elevation: 0,
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.transparent,
+                                    alignment: const AlignmentDirectional(0.0, 0.0)
+                                        .resolve(Directionality.of(context)),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        FocusScope.of(dialogContext).unfocus();
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                      },
+                                      child: DialogWidget(
+                                        title:
+                                            'Sei sicuro di caricare questa location?',
+                                        dettails:
+                                            'Sei sicuro di voler caricare la location con i dati inseriti?',
+                                        confirmCB: () async {
+                                          var locationRecordReference =
+                                              LocationRecord.collection.doc();
+                                          await locationRecordReference.set({
+                                            ...createLocationRecordData(
+                                              displayName: _model
+                                                  .titleLocationTextController
+                                                  .text,
+                                              address: _model
+                                                  .addressLocationTextController
+                                                  .text,
+                                              description: _model
+                                                  .descriptionTextController
+                                                  .text,
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'Image': [
+                                                  _model.uploadedFileUrl
+                                                ],
+                                                'Social': [
+                                                  _model
+                                                      .linksocialTextController
+                                                      .text
+                                                ],
+                                              },
+                                            ),
+                                          });
+                                          _model.locationref = LocationRecord
+                                              .getDocumentFromData({
+                                            ...createLocationRecordData(
+                                              displayName: _model
+                                                  .titleLocationTextController
+                                                  .text,
+                                              address: _model
+                                                  .addressLocationTextController
+                                                  .text,
+                                              description: _model
+                                                  .descriptionTextController
+                                                  .text,
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'Image': [
+                                                  _model.uploadedFileUrl
+                                                ],
+                                                'Social': [
+                                                  _model
+                                                      .linksocialTextController
+                                                      .text
+                                                ],
+                                              },
+                                            ),
+                                          }, locationRecordReference);
+
+                                          await NotificationRecord.collection
+                                              .doc()
+                                              .set(createNotificationRecordData(
+                                                name: 'Nuovo Locale caricato',
+                                                description:
+                                                    'è stata appena creata una nuova location ${_model.locationref?.displayName}',
+                                                createdAt: getCurrentTimestamp,
+                                                location: _model
+                                                    .locationref?.reference,
+                                              ));
+                                        },
+                                      ),
+                                    ),
+                                  );
                                 },
-                              ),
-                            });
-                          },
-                          text: 'Conferma',
-                          options: FFButtonOptions(
-                            width: MediaQuery.sizeOf(context).width * 1.0,
-                            height: 40.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: const Color(0xC0CF3A0A),
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Lato',
-                                  color: Colors.white,
-                                  fontSize: 14.0,
-                                  letterSpacing: 0.0,
-                                ),
-                            elevation: 0.0,
-                            borderRadius: BorderRadius.circular(24.0),
+                              );
+
+                              safeSetState(() {});
+                            },
+                            text: 'Conferma',
+                            options: FFButtonOptions(
+                              width: MediaQuery.sizeOf(context).width * 1.0,
+                              height: 40.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: const Color(0xC0CF3A0A),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Lato',
+                                    color: Colors.white,
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 0.0,
+                              borderRadius: BorderRadius.circular(24.0),
+                            ),
                           ),
                         ),
                       ),

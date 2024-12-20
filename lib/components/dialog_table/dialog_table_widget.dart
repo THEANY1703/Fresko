@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/dialog/dialog_widget.dart';
 import '/components/table_composing/table_composing_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -150,88 +151,6 @@ class _DialogTableWidgetState extends State<DialogTableWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            var tablesRecordReference =
-                                TablesRecord.collection.doc();
-                            await tablesRecordReference.set({
-                              ...createTablesRecordData(
-                                title: listViewTableModelRecord.name,
-                                price: listViewTableModelRecord.price,
-                                event: listViewTableModelRecord.parentReference,
-                                prList: widget.prList,
-                                isApproved: false,
-                                typeTable: listViewTableModelRecord.type,
-                                capacity: 15,
-                                isFull: false,
-                              ),
-                              ...mapToFirestore(
-                                {
-                                  'Members': [currentUserReference],
-                                },
-                              ),
-                            });
-                            _model.tableref = TablesRecord.getDocumentFromData({
-                              ...createTablesRecordData(
-                                title: listViewTableModelRecord.name,
-                                price: listViewTableModelRecord.price,
-                                event: listViewTableModelRecord.parentReference,
-                                prList: widget.prList,
-                                isApproved: false,
-                                typeTable: listViewTableModelRecord.type,
-                                capacity: 15,
-                                isFull: false,
-                              ),
-                              ...mapToFirestore(
-                                {
-                                  'Members': [currentUserReference],
-                                },
-                              ),
-                            }, tablesRecordReference);
-
-                            var ticketRecordReference =
-                                TicketRecord.collection.doc();
-                            await ticketRecordReference
-                                .set(createTicketRecordData(
-                              title: listViewTableModelRecord.title,
-                              price: listViewTableModelRecord.price,
-                              event: widget.eventReference,
-                              prList: widget.prList,
-                              uniqueCode: functions.getUnicode(
-                                  listViewTableModelRecord.name,
-                                  listViewTableModelRecord.price,
-                                  currentUserDisplayName),
-                              user: currentUserReference,
-                              isApproved: false,
-                              typeTable: listViewTableModelRecord.type,
-                              table: _model.tableref?.reference,
-                            ));
-                            _model.ticket = TicketRecord.getDocumentFromData(
-                                createTicketRecordData(
-                                  title: listViewTableModelRecord.title,
-                                  price: listViewTableModelRecord.price,
-                                  event: widget.eventReference,
-                                  prList: widget.prList,
-                                  uniqueCode: functions.getUnicode(
-                                      listViewTableModelRecord.name,
-                                      listViewTableModelRecord.price,
-                                      currentUserDisplayName),
-                                  user: currentUserReference,
-                                  isApproved: false,
-                                  typeTable: listViewTableModelRecord.type,
-                                  table: _model.tableref?.reference,
-                                ),
-                                ticketRecordReference);
-
-                            await widget.eventReference!.update({
-                              ...mapToFirestore(
-                                {
-                                  'Participants': FieldValue.arrayUnion(
-                                      [currentUserReference]),
-                                  'totalParticipants': FieldValue.increment(1),
-                                },
-                              ),
-                            });
-                            await Future.delayed(
-                                const Duration(milliseconds: 500));
                             await showDialog(
                               context: context,
                               builder: (dialogContext) {
@@ -241,8 +160,129 @@ class _DialogTableWidgetState extends State<DialogTableWidget> {
                                   backgroundColor: Colors.transparent,
                                   alignment: const AlignmentDirectional(0.0, 0.0)
                                       .resolve(Directionality.of(context)),
-                                  child: TableComposingWidget(
-                                    tablesRef: _model.tableref!,
+                                  child: DialogWidget(
+                                    title:
+                                        'Sei sicuro di voler prenotare un tavolo?',
+                                    dettails:
+                                        'Se confermi, prenoteri un tavolo, non potrai più acquistare biglietti, clicca conferma per prenotare un tavolo',
+                                    confirmCB: () async {
+                                      var tablesRecordReference =
+                                          TablesRecord.collection.doc();
+                                      await tablesRecordReference.set({
+                                        ...createTablesRecordData(
+                                          title: listViewTableModelRecord.name,
+                                          price: listViewTableModelRecord.price,
+                                          event: listViewTableModelRecord
+                                              .parentReference,
+                                          prList: widget.prList,
+                                          isApproved: false,
+                                          typeTable:
+                                              listViewTableModelRecord.type,
+                                          capacity: 15,
+                                          isFull: false,
+                                        ),
+                                        ...mapToFirestore(
+                                          {
+                                            'Members': [currentUserReference],
+                                          },
+                                        ),
+                                      });
+                                      _model.tableref =
+                                          TablesRecord.getDocumentFromData({
+                                        ...createTablesRecordData(
+                                          title: listViewTableModelRecord.name,
+                                          price: listViewTableModelRecord.price,
+                                          event: listViewTableModelRecord
+                                              .parentReference,
+                                          prList: widget.prList,
+                                          isApproved: false,
+                                          typeTable:
+                                              listViewTableModelRecord.type,
+                                          capacity: 15,
+                                          isFull: false,
+                                        ),
+                                        ...mapToFirestore(
+                                          {
+                                            'Members': [currentUserReference],
+                                          },
+                                        ),
+                                      }, tablesRecordReference);
+
+                                      var ticketRecordReference =
+                                          TicketRecord.collection.doc();
+                                      await ticketRecordReference
+                                          .set(createTicketRecordData(
+                                        title: listViewTableModelRecord.title,
+                                        price: listViewTableModelRecord.price,
+                                        event: widget.eventReference,
+                                        prList: widget.prList,
+                                        uniqueCode: functions.getUnicode(
+                                            listViewTableModelRecord.name,
+                                            listViewTableModelRecord.price,
+                                            currentUserDisplayName),
+                                        user: currentUserReference,
+                                        isApproved: false,
+                                        typeTable:
+                                            listViewTableModelRecord.type,
+                                        table: _model.tableref?.reference,
+                                      ));
+                                      _model.ticket =
+                                          TicketRecord.getDocumentFromData(
+                                              createTicketRecordData(
+                                                title: listViewTableModelRecord
+                                                    .title,
+                                                price: listViewTableModelRecord
+                                                    .price,
+                                                event: widget.eventReference,
+                                                prList: widget.prList,
+                                                uniqueCode:
+                                                    functions.getUnicode(
+                                                        listViewTableModelRecord
+                                                            .name,
+                                                        listViewTableModelRecord
+                                                            .price,
+                                                        currentUserDisplayName),
+                                                user: currentUserReference,
+                                                isApproved: false,
+                                                typeTable:
+                                                    listViewTableModelRecord
+                                                        .type,
+                                                table:
+                                                    _model.tableref?.reference,
+                                              ),
+                                              ticketRecordReference);
+
+                                      await widget.eventReference!.update({
+                                        ...mapToFirestore(
+                                          {
+                                            'Participants':
+                                                FieldValue.arrayUnion(
+                                                    [currentUserReference]),
+                                            'totalParticipants':
+                                                FieldValue.increment(1),
+                                          },
+                                        ),
+                                      });
+                                      await Future.delayed(
+                                          const Duration(milliseconds: 500));
+                                      await showDialog(
+                                        context: context,
+                                        builder: (dialogContext) {
+                                          return Dialog(
+                                            elevation: 0,
+                                            insetPadding: EdgeInsets.zero,
+                                            backgroundColor: Colors.transparent,
+                                            alignment: const AlignmentDirectional(
+                                                    0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                            child: TableComposingWidget(
+                                              tablesRef: _model.tableref!,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
                                   ),
                                 );
                               },

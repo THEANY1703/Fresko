@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'location_create_widget.dart' show LocationCreateWidget;
 import 'package:flutter/material.dart';
@@ -32,6 +33,8 @@ class LocationCreateModel extends FlutterFlowModel<LocationCreateWidget> {
   FocusNode? linksocialFocusNode;
   TextEditingController? linksocialTextController;
   String? Function(BuildContext, String?)? linksocialTextControllerValidator;
+  // Stores action output result for [Backend Call - Create Document] action in Confirmation widget.
+  LocationRecord? locationref;
 
   @override
   void initState(BuildContext context) {}

@@ -149,9 +149,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'OrganizationPage',
+          name: 'OrganizationPagev3',
           path: '/OrganizationPage',
-          builder: (context, params) => OrganizationPageWidget(
+          builder: (context, params) => OrganizationPagev3Widget(
             organizationReference: params.getParam(
               'organizationReference',
               ParamType.DocumentReference,
@@ -503,10 +503,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'tagPage',
           path: '/tagPage',
+          asyncParams: {
+            'tagSelected': getDoc(['Tag'], TagRecord.fromSnapshot),
+          },
           builder: (context, params) => TagPageWidget(
             tagSelected: params.getParam(
               'tagSelected',
-              ParamType.String,
+              ParamType.Document,
             ),
           ),
         ),
@@ -521,9 +524,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const FeedbackWidget(),
         ),
         FFRoute(
-          name: 'OrganizationPageCopy',
+          name: 'OrganizationPage',
           path: '/OrganizationPageCopy',
-          builder: (context, params) => OrganizationPageCopyWidget(
+          builder: (context, params) => OrganizationPageWidget(
             organizationReference: params.getParam(
               'organizationReference',
               ParamType.DocumentReference,

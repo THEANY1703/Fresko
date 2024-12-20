@@ -140,7 +140,7 @@ class _EventPageWidgetState extends State<EventPageWidget>
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  context.pop();
+                  context.safePop();
                 },
               ),
               title: Align(
@@ -159,203 +159,149 @@ class _EventPageWidgetState extends State<EventPageWidget>
               centerTitle: false,
               elevation: 2.0,
             ),
-            body: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 25.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          constraints: const BoxConstraints(
-                            maxWidth: 570.0,
-                          ),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: Image.network(
-                                '',
-                              ).image,
+            body: SafeArea(
+              top: true,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 25.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            constraints: const BoxConstraints(
+                              maxWidth: 570.0,
                             ),
-                            gradient: LinearGradient(
-                              colors: [
-                                const Color(0x17FFF9F9),
-                                FlutterFlowTheme.of(context).primary
-                              ],
-                              stops: const [0.0, 0.6],
-                              begin: const AlignmentDirectional(0.0, -1.0),
-                              end: const AlignmentDirectional(0, 1.0),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: Image.network(
+                                  '',
+                                ).image,
+                              ),
+                              gradient: LinearGradient(
+                                colors: [
+                                  const Color(0x17FFF9F9),
+                                  FlutterFlowTheme.of(context).primary
+                                ],
+                                stops: const [0.0, 0.6],
+                                begin: const AlignmentDirectional(0.0, -1.0),
+                                end: const AlignmentDirectional(0, 1.0),
+                              ),
+                              borderRadius: BorderRadius.circular(0.0),
                             ),
-                            borderRadius: BorderRadius.circular(0.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: StreamBuilder<LocationRecord>(
-                              stream: LocationRecord.getDocument(
-                                  eventPageEventRecord.location!),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: SpinKitFadingCube(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        size: 50.0,
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              child: StreamBuilder<LocationRecord>(
+                                stream: LocationRecord.getDocument(
+                                    eventPageEventRecord.location!),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50.0,
+                                        height: 50.0,
+                                        child: SpinKitFadingCube(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          size: 50.0,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }
+                                    );
+                                  }
 
-                                final contentColumnLocationRecord =
-                                    snapshot.data!;
+                                  final contentColumnLocationRecord =
+                                      snapshot.data!;
 
-                                return Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Builder(
-                                      builder: (context) {
-                                        if (_model.ticketExist == true) {
-                                          return StreamBuilder<
-                                              List<TicketRecord>>(
-                                            stream: queryTicketRecord(
-                                              queryBuilder: (ticketRecord) =>
-                                                  ticketRecord
-                                                      .where(
-                                                        'Event',
-                                                        isEqualTo:
-                                                            widget.eventId,
-                                                      )
-                                                      .where(
-                                                        'User',
-                                                        isEqualTo:
-                                                            currentUserReference,
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Builder(
+                                        builder: (context) {
+                                          if (_model.ticketExist == true) {
+                                            return StreamBuilder<
+                                                List<TicketRecord>>(
+                                              stream: queryTicketRecord(
+                                                queryBuilder: (ticketRecord) =>
+                                                    ticketRecord
+                                                        .where(
+                                                          'Event',
+                                                          isEqualTo:
+                                                              widget.eventId,
+                                                        )
+                                                        .where(
+                                                          'User',
+                                                          isEqualTo:
+                                                              currentUserReference,
+                                                        ),
+                                                singleRecord: true,
+                                              )..listen((snapshot) {
+                                                  List<TicketRecord>
+                                                      flippableCardTicketRecordList =
+                                                      snapshot;
+                                                  final flippableCardTicketRecord =
+                                                      flippableCardTicketRecordList
+                                                              .isNotEmpty
+                                                          ? flippableCardTicketRecordList
+                                                              .first
+                                                          : null;
+                                                  if (_model.flippableCardPreviousSnapshot !=
+                                                          null &&
+                                                      !const ListEquality(
+                                                              TicketRecordDocumentEquality())
+                                                          .equals(
+                                                              flippableCardTicketRecordList,
+                                                              _model
+                                                                  .flippableCardPreviousSnapshot)) {
+                                                    () async {}();
+                                                  }
+                                                  _model.flippableCardPreviousSnapshot =
+                                                      snapshot;
+                                                }),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child: SpinKitFadingCube(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        size: 50.0,
                                                       ),
-                                              singleRecord: true,
-                                            )..listen((snapshot) {
+                                                    ),
+                                                  );
+                                                }
                                                 List<TicketRecord>
                                                     flippableCardTicketRecordList =
-                                                    snapshot;
+                                                    snapshot.data!;
+                                                // Return an empty Container when the item does not exist.
+                                                if (snapshot.data!.isEmpty) {
+                                                  return Container();
+                                                }
                                                 final flippableCardTicketRecord =
                                                     flippableCardTicketRecordList
                                                             .isNotEmpty
                                                         ? flippableCardTicketRecordList
                                                             .first
                                                         : null;
-                                                if (_model.flippableCardPreviousSnapshot !=
-                                                        null &&
-                                                    !const ListEquality(
-                                                            TicketRecordDocumentEquality())
-                                                        .equals(
-                                                            flippableCardTicketRecordList,
-                                                            _model
-                                                                .flippableCardPreviousSnapshot)) {
-                                                  () async {}();
-                                                }
-                                                _model.flippableCardPreviousSnapshot =
-                                                    snapshot;
-                                              }),
-                                            builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
-                                              if (!snapshot.hasData) {
-                                                return Center(
-                                                  child: SizedBox(
-                                                    width: 50.0,
-                                                    height: 50.0,
-                                                    child: SpinKitFadingCube(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      size: 50.0,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                              List<TicketRecord>
-                                                  flippableCardTicketRecordList =
-                                                  snapshot.data!;
-                                              // Return an empty Container when the item does not exist.
-                                              if (snapshot.data!.isEmpty) {
-                                                return Container();
-                                              }
-                                              final flippableCardTicketRecord =
-                                                  flippableCardTicketRecordList
-                                                          .isNotEmpty
-                                                      ? flippableCardTicketRecordList
-                                                          .first
-                                                      : null;
 
-                                              return FlipCard(
-                                                fill: Fill.fillBack,
-                                                direction:
-                                                    FlipDirection.HORIZONTAL,
-                                                speed: 400,
-                                                front: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 10.0, 0.0, 30.0),
-                                                  child: Container(
-                                                    width: 370.0,
-                                                    height: 350.0,
-                                                    decoration: BoxDecoration(
-                                                      boxShadow: const [
-                                                        BoxShadow(
-                                                          blurRadius: 4.0,
-                                                          color:
-                                                              Color(0x33000000),
-                                                          offset: Offset(
-                                                            0.0,
-                                                            2.0,
-                                                          ),
-                                                        )
-                                                      ],
-                                                      gradient: const LinearGradient(
-                                                        colors: [
-                                                          Color(0xFF505050),
-                                                          Color(0xFF181818)
-                                                        ],
-                                                        stops: [0.0, 1.0],
-                                                        begin:
-                                                            AlignmentDirectional(
-                                                                0.0, -1.0),
-                                                        end:
-                                                            AlignmentDirectional(
-                                                                0, 1.0),
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              40.0),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(25.0),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30.0),
-                                                        child: Image.network(
-                                                          eventPageEventRecord
-                                                              .images,
-                                                          width: 400.0,
-                                                          height: 300.0,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                back: Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          0.0, 0.0),
-                                                  child: Padding(
+                                                return FlipCard(
+                                                  fill: Fill.fillBack,
+                                                  direction:
+                                                      FlipDirection.HORIZONTAL,
+                                                  speed: 400,
+                                                  front: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 10.0,
@@ -396,560 +342,639 @@ class _EventPageWidgetState extends State<EventPageWidget>
                                                       child: Padding(
                                                         padding: const EdgeInsets.all(
                                                             25.0),
-                                                        child: BarcodeWidget(
-                                                          data:
-                                                              'Fresko=${flippableCardTicketRecord?.uniqueCode}',
-                                                          barcode:
-                                                              Barcode.qrCode(),
-                                                          width: 200.0,
-                                                          height: 200.0,
-                                                          color: Colors.white,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          errorBuilder:
-                                                              (context,
-                                                                      error) =>
-                                                                  const SizedBox(
-                                                            width: 200.0,
-                                                            height: 200.0,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      30.0),
+                                                          child: Image.network(
+                                                            eventPageEventRecord
+                                                                .images,
+                                                            width: 400.0,
+                                                            height: 300.0,
+                                                            fit: BoxFit.cover,
                                                           ),
-                                                          drawText: false,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        } else {
-                                          return Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 30.0),
-                                            child: Container(
-                                              width: 370.0,
-                                              height: 350.0,
-                                              decoration: BoxDecoration(
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    blurRadius: 4.0,
-                                                    color: Color(0x33000000),
-                                                    offset: Offset(
-                                                      0.0,
-                                                      2.0,
-                                                    ),
-                                                  )
-                                                ],
-                                                gradient: const LinearGradient(
-                                                  colors: [
-                                                    Color(0xFF505050),
-                                                    Color(0xFF181818)
-                                                  ],
-                                                  stops: [0.0, 1.0],
-                                                  begin: AlignmentDirectional(
-                                                      0.0, -1.0),
-                                                  end: AlignmentDirectional(
-                                                      0, 1.0),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(40.0),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(25.0),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30.0),
-                                                  child: Image.network(
-                                                    valueOrDefault<String>(
-                                                      eventPageEventRecord
-                                                          .images,
-                                                      'https://firebasestorage.googleapis.com/v0/b/fresko-1e75d.appspot.com/o/users%2FfIm8tosqbeea1Hml8qEIRpFUGiM2%2Fuploads%2F1732136426067000.jpeg?alt=media&token=5897cd1f-995a-482e-8fbc-3da80c2bca4f',
-                                                    ),
-                                                    width: 400.0,
-                                                    height: 300.0,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        if ((currentUserDocument?.role ==
-                                                Role.Pr) ||
-                                            (currentUserDocument?.role ==
-                                                Role.Organaizer))
-                                          Align(
-                                            alignment:
-                                                const AlignmentDirectional(0.0, 0.0),
-                                            child: Builder(
-                                              builder: (context) => Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 25.0, 0.0),
-                                                child: AuthUserStreamWidget(
-                                                  builder: (context) =>
-                                                      FFButtonWidget(
-                                                    onPressed: () async {
-                                                      await Share.share(
-                                                        'https://fresko.page.link/eventPage?eventId=${widget.eventId?.id}?prlistdp=',
-                                                        sharePositionOrigin:
-                                                            getWidgetBoundingBox(
-                                                                context),
-                                                      );
-                                                    },
-                                                    text: 'Genera Link Pr',
-                                                    options: FFButtonOptions(
-                                                      height: 25.0,
+                                                  back: Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            0.0, 0.0),
+                                                    child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  16.0,
                                                                   0.0,
-                                                                  16.0,
-                                                                  0.0),
-                                                      iconPadding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
+                                                                  10.0,
                                                                   0.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      color: const Color(0xBBEA5928),
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleSmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Lato',
-                                                                color: Colors
-                                                                    .white,
-                                                                letterSpacing:
-                                                                    0.0,
+                                                                  30.0),
+                                                      child: Container(
+                                                        width: 370.0,
+                                                        height: 350.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          boxShadow: const [
+                                                            BoxShadow(
+                                                              blurRadius: 4.0,
+                                                              color: Color(
+                                                                  0x33000000),
+                                                              offset: Offset(
+                                                                0.0,
+                                                                2.0,
                                                               ),
-                                                      elevation: 0.0,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              24.0),
+                                                            )
+                                                          ],
+                                                          gradient:
+                                                              const LinearGradient(
+                                                            colors: [
+                                                              Color(0xFF505050),
+                                                              Color(0xFF181818)
+                                                            ],
+                                                            stops: [0.0, 1.0],
+                                                            begin:
+                                                                AlignmentDirectional(
+                                                                    0.0, -1.0),
+                                                            end:
+                                                                AlignmentDirectional(
+                                                                    0, 1.0),
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      40.0),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets.all(
+                                                                  25.0),
+                                                          child: BarcodeWidget(
+                                                            data:
+                                                                'Fresko=${flippableCardTicketRecord?.uniqueCode}',
+                                                            barcode: Barcode
+                                                                .qrCode(),
+                                                            width: 200.0,
+                                                            height: 200.0,
+                                                            color: Colors.white,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            errorBuilder:
+                                                                (context,
+                                                                        error) =>
+                                                                    const SizedBox(
+                                                              width: 200.0,
+                                                              height: 200.0,
+                                                            ),
+                                                            drawText: false,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          } else {
+                                            return Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 10.0, 0.0, 30.0),
+                                              child: Container(
+                                                width: 370.0,
+                                                height: 350.0,
+                                                decoration: BoxDecoration(
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      blurRadius: 4.0,
+                                                      color: Color(0x33000000),
+                                                      offset: Offset(
+                                                        0.0,
+                                                        2.0,
+                                                      ),
+                                                    )
+                                                  ],
+                                                  gradient: const LinearGradient(
+                                                    colors: [
+                                                      Color(0xFF505050),
+                                                      Color(0xFF181818)
+                                                    ],
+                                                    stops: [0.0, 1.0],
+                                                    begin: AlignmentDirectional(
+                                                        0.0, -1.0),
+                                                    end: AlignmentDirectional(
+                                                        0, 1.0),
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          40.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(25.0),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30.0),
+                                                    child: Image.network(
+                                                      valueOrDefault<String>(
+                                                        eventPageEventRecord
+                                                            .images,
+                                                        'https://firebasestorage.googleapis.com/v0/b/fresko-1e75d.appspot.com/o/users%2FfIm8tosqbeea1Hml8qEIRpFUGiM2%2Fuploads%2F1732136426067000.jpeg?alt=media&token=5897cd1f-995a-482e-8fbc-3da80c2bca4f',
+                                                      ),
+                                                      width: 400.0,
+                                                      height: 300.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          if ((currentUserDocument?.role ==
+                                                  Role.Pr) ||
+                                              (currentUserDocument?.role ==
+                                                  Role.Organaizer))
+                                            Align(
+                                              alignment: const AlignmentDirectional(
+                                                  0.0, 0.0),
+                                              child: Builder(
+                                                builder: (context) => Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 25.0, 0.0),
+                                                  child: AuthUserStreamWidget(
+                                                    builder: (context) =>
+                                                        FFButtonWidget(
+                                                      onPressed: () async {
+                                                        await Share.share(
+                                                          'https://fresko.page.link/eventPage?eventId=${widget.eventId?.id}?prlistdp=',
+                                                          sharePositionOrigin:
+                                                              getWidgetBoundingBox(
+                                                                  context),
+                                                        );
+                                                      },
+                                                      text: 'Genera Link Pr',
+                                                      options: FFButtonOptions(
+                                                        height: 25.0,
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0),
+                                                        iconPadding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        color:
+                                                            const Color(0xBBEA5928),
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Lato',
+                                                                  color: Colors
+                                                                      .white,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                        elevation: 0.0,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(24.0),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                      ],
-                                    ),
-                                    Text(
-                                      eventPageEventRecord.name,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Lato',
-                                            fontSize: 25.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 17.0),
-                                      child: Text(
-                                        functions.formatDateTime(
-                                            eventPageEventRecord.dateEvent!),
+                                        ],
+                                      ),
+                                      Text(
+                                        eventPageEventRecord.name,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Lato',
-                                              color: const Color(0xFF4B7EFF),
-                                              fontSize: 15.0,
+                                              fontSize: 25.0,
                                               letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w900,
                                             ),
                                       ),
-                                    ),
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.pushNamed(
-                                          'LocationPage',
-                                          queryParameters: {
-                                            'locationRef': serializeParam(
-                                              contentColumnLocationRecord
-                                                  .reference,
-                                              ParamType.DocumentReference,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      },
-                                      child: Text(
-                                        contentColumnLocationRecord.displayName,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Lato',
-                                              color: const Color(0xFFFCCB4A),
-                                              fontSize: 19.0,
-                                              letterSpacing: 0.0,
-                                            ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
+                                      Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 30.0, 0.0, 5.0),
+                                            0.0, 10.0, 0.0, 17.0),
                                         child: Text(
-                                          'Dettagli evento ',
+                                          functions.formatDateTime(
+                                              eventPageEventRecord.dateEvent!),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Lato',
-                                                color: Colors.white,
-                                                fontSize: 16.0,
+                                                color: const Color(0xFF4B7EFF),
+                                                fontSize: 15.0,
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          40.0, 8.0, 40.0, 12.0),
-                                      child: Text(
-                                        eventPageEventRecord.description,
-                                        style: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .override(
-                                              fontFamily: 'Lato',
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                            ),
-                                      ),
-                                    ),
-                                    Text(
-                                      'Organizzato da',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyLarge
-                                          .override(
-                                            fontFamily: ' Brigends Expanded',
-                                            fontSize: 13.0,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts: false,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 10.0, 10.0, 62.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 120.0,
-                                              decoration: const BoxDecoration(
-                                                color: Colors.transparent,
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Expanded(
-                                                    child: StreamBuilder<
-                                                        List<
-                                                            OrganizationRecord>>(
-                                                      stream:
-                                                          queryOrganizationRecord(
-                                                        limit: 5,
-                                                      ),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        // Customize what your widget looks like when it's loading.
-                                                        if (!snapshot.hasData) {
-                                                          return Center(
-                                                            child: SizedBox(
-                                                              width: 50.0,
-                                                              height: 50.0,
-                                                              child:
-                                                                  SpinKitFadingCube(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                                size: 50.0,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }
-                                                        List<OrganizationRecord>
-                                                            listViewOrganizationRecordList =
-                                                            snapshot.data!;
-
-                                                        return ListView.builder(
-                                                          padding:
-                                                              EdgeInsets.zero,
-                                                          scrollDirection:
-                                                              Axis.horizontal,
-                                                          itemCount:
-                                                              listViewOrganizationRecordList
-                                                                  .length,
-                                                          itemBuilder: (context,
-                                                              listViewIndex) {
-                                                            final listViewOrganizationRecord =
-                                                                listViewOrganizationRecordList[
-                                                                    listViewIndex];
-                                                            return Visibility(
-                                                              visible: eventPageEventRecord
-                                                                      .organizers
-                                                                      .contains(
-                                                                          listViewOrganizationRecord
-                                                                              .reference) ==
-                                                                  true,
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            10.0,
-                                                                            0.0),
-                                                                child:
-                                                                    Container(
-                                                                  width: 100.0,
-                                                                  height: 100.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: const Color(
-                                                                        0x50090F13),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            9.0),
-                                                                  ),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            ClipRRect(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(9.0),
-                                                                          child:
-                                                                              Image.network(
-                                                                            listViewOrganizationRecord.logo,
-                                                                            width:
-                                                                                100.0,
-                                                                            height:
-                                                                                100.0,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                            3.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Text(
-                                                                          listViewOrganizationRecord
-                                                                              .name,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Lato',
-                                                                                color: FlutterFlowTheme.of(context).lineColor,
-                                                                                fontSize: 12.0,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.normal,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ).animateOnPageLoad(
-                                                                        animationsMap[
-                                                                            'containerOnPageLoadAnimation']!),
-                                                              ),
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: const AlignmentDirectional(0.0, 1.0),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Expanded(
-                          child: Builder(
-                            builder: (context) {
-                              if (_model.ticketExist == false) {
-                                return Align(
-                                  alignment: const AlignmentDirectional(0.0, 1.0),
-                                  child: Builder(
-                                    builder: (context) => Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 8.0, 16.0, 12.0),
-                                      child: InkWell(
+                                      InkWell(
                                         splashColor: Colors.transparent,
                                         focusColor: Colors.transparent,
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          await showDialog(
-                                            context: context,
-                                            builder: (dialogContext) {
-                                              return Dialog(
-                                                elevation: 0,
-                                                insetPadding: EdgeInsets.zero,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                alignment: const AlignmentDirectional(
-                                                        0.0, 0.0)
-                                                    .resolve(Directionality.of(
-                                                        context)),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    FocusScope.of(dialogContext)
-                                                        .unfocus();
-                                                    FocusManager
-                                                        .instance.primaryFocus
-                                                        ?.unfocus();
-                                                  },
-                                                  child: DialogTicketWidget(
-                                                    eventReference:
-                                                        widget.eventId!,
-                                                  ),
-                                                ),
-                                              );
-                                            },
+                                          context.pushNamed(
+                                            'LocationPage',
+                                            queryParameters: {
+                                              'locationRef': serializeParam(
+                                                contentColumnLocationRecord
+                                                    .reference,
+                                                ParamType.DocumentReference,
+                                              ),
+                                            }.withoutNulls,
                                           );
                                         },
-                                        child: Container(
-                                          width: 200.0,
-                                          height: 40.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                blurRadius: 4.0,
-                                                color: Color(0x33000000),
-                                                offset: Offset(
-                                                  0.0,
-                                                  2.0,
-                                                ),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(14.0),
-                                          ),
-                                          alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                        child: Text(
+                                          contentColumnLocationRecord
+                                              .displayName,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Lato',
+                                                color: const Color(0xFFFCCB4A),
+                                                fontSize: 19.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            const AlignmentDirectional(0.0, 0.0),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 30.0, 0.0, 5.0),
                                           child: Text(
-                                            'Prenota il tuo biglietto',
+                                            'Dettagli evento ',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Lato',
-                                                  fontSize: 18.0,
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w900,
                                                 ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 8.0, 16.0, 12.0),
-                                  child: Container(
-                                    width: 100.0,
-                                    height: 40.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 4.0,
-                                          color: Color(0x33000000),
-                                          offset: Offset(
-                                            0.0,
-                                            2.0,
-                                          ),
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                    alignment: const AlignmentDirectional(0.0, 0.0),
-                                    child: Text(
-                                      'Clicca sulla locandina e visualizza il tuo ticket',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Lato',
-                                            fontSize: 17.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            40.0, 8.0, 40.0, 12.0),
+                                        child: Text(
+                                          eventPageEventRecord.description,
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                fontFamily: 'Lato',
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Organizzato da',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              fontFamily: ' Brigends Expanded',
+                                              fontSize: 13.0,
+                                              letterSpacing: 0.0,
+                                              useGoogleFonts: false,
+                                            ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 10.0, 10.0, 62.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 120.0,
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.transparent,
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Expanded(
+                                                      child: StreamBuilder<
+                                                          List<
+                                                              OrganizationRecord>>(
+                                                        stream:
+                                                            queryOrganizationRecord(
+                                                          limit: 5,
+                                                        ),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // Customize what your widget looks like when it's loading.
+                                                          if (!snapshot
+                                                              .hasData) {
+                                                            return Center(
+                                                              child: SizedBox(
+                                                                width: 50.0,
+                                                                height: 50.0,
+                                                                child:
+                                                                    SpinKitFadingCube(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                  size: 50.0,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }
+                                                          List<OrganizationRecord>
+                                                              listViewOrganizationRecordList =
+                                                              snapshot.data!;
+
+                                                          return ListView
+                                                              .builder(
+                                                            padding:
+                                                                EdgeInsets.zero,
+                                                            scrollDirection:
+                                                                Axis.horizontal,
+                                                            itemCount:
+                                                                listViewOrganizationRecordList
+                                                                    .length,
+                                                            itemBuilder: (context,
+                                                                listViewIndex) {
+                                                              final listViewOrganizationRecord =
+                                                                  listViewOrganizationRecordList[
+                                                                      listViewIndex];
+                                                              return Visibility(
+                                                                visible: eventPageEventRecord
+                                                                        .organizers
+                                                                        .contains(
+                                                                            listViewOrganizationRecord.reference) ==
+                                                                    true,
+                                                                child: Padding(
+                                                                  padding: const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          10.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      Container(
+                                                                    width:
+                                                                        100.0,
+                                                                    height:
+                                                                        100.0,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: const Color(
+                                                                          0x50090F13),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              9.0),
+                                                                    ),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Padding(
+                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              1.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              ClipRRect(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(9.0),
+                                                                            child:
+                                                                                Image.network(
+                                                                              listViewOrganizationRecord.logo,
+                                                                              width: 100.0,
+                                                                              height: 100.0,
+                                                                              fit: BoxFit.cover,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                              3.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Text(
+                                                                            listViewOrganizationRecord.name,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Lato',
+                                                                                  color: FlutterFlowTheme.of(context).lineColor,
+                                                                                  fontSize: 12.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.normal,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ).animateOnPageLoad(
+                                                                          animationsMap[
+                                                                              'containerOnPageLoadAnimation']!),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Align(
+                    alignment: const AlignmentDirectional(0.0, 1.0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Builder(
+                              builder: (context) {
+                                if (_model.ticketExist == false) {
+                                  return Align(
+                                    alignment: const AlignmentDirectional(0.0, 1.0),
+                                    child: Builder(
+                                      builder: (context) => Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 8.0, 16.0, 12.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child: DialogTicketWidget(
+                                                      eventReference:
+                                                          widget.eventId!,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 249.0,
+                                            height: 40.0,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  blurRadius: 4.0,
+                                                  color: Color(0x33000000),
+                                                  offset: Offset(
+                                                    0.0,
+                                                    2.0,
+                                                  ),
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(14.0),
+                                            ),
+                                            alignment:
+                                                const AlignmentDirectional(0.0, 0.0),
+                                            child: Text(
+                                              'Prenota il tuo biglietto',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Lato',
+                                                        fontSize: 18.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w900,
+                                                      ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 8.0, 16.0, 12.0),
+                                    child: Container(
+                                      width: 100.0,
+                                      height: 40.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(
+                                              0.0,
+                                              2.0,
+                                            ),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      alignment: const AlignmentDirectional(0.0, 0.0),
+                                      child: Text(
+                                        'Clicca sulla locandina e visualizza il tuo ticket',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Lato',
+                                              fontSize: 17.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
