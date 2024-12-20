@@ -126,499 +126,545 @@ class _ProfileUserPublicWidgetState extends State<ProfileUserPublicWidget>
         centerTitle: true,
         elevation: 2.0,
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 260.0,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        FlutterFlowTheme.of(context).primary,
-                        const Color(0xFF2B318A)
-                      ],
-                      stops: const [0.0, 1.0],
-                      begin: const AlignmentDirectional(0.0, -1.0),
-                      end: const AlignmentDirectional(0, 1.0),
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(36.0),
-                      bottomRight: Radius.circular(36.0),
-                      topLeft: Radius.circular(0.0),
-                      topRight: Radius.circular(0.0),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          if ((currentUserDocument?.role ==
-                                  Role.OwnerOrganization) ||
-                              (currentUserDocument?.role == Role.Organaizer))
-                            AuthUserStreamWidget(
-                              builder: (context) => FlutterFlowIconButton(
-                                borderColor: Colors.white,
-                                borderRadius: 12.0,
-                                borderWidth: 7.0,
-                                buttonSize: 45.0,
-                                fillColor: Colors.transparent,
-                                icon: Icon(
-                                  Icons.add,
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                ),
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
-                              ),
-                            ),
-                          if ((currentUserDocument?.role ==
-                                  Role.OwnerOrganization) ||
-                              (currentUserDocument?.role == Role.Organaizer))
-                            AuthUserStreamWidget(
-                              builder: (context) => FlutterFlowIconButton(
-                                borderColor:
-                                    FlutterFlowTheme.of(context).tertiary,
-                                borderRadius: 12.0,
-                                borderWidth: 7.0,
-                                buttonSize: 45.0,
-                                fillColor: Colors.transparent,
-                                icon: Icon(
-                                  Icons.bar_chart_sharp,
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                ),
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
-                              ),
-                            ),
-                        ].divide(const SizedBox(height: 15.0)),
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 30.0),
-                            child: AuthUserStreamWidget(
-                              builder: (context) => Container(
-                                width: 150.0,
-                                height: 150.0,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                  currentUserPhoto,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                          AuthUserStreamWidget(
-                            builder: (context) => Text(
-                              currentUserDisplayName,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Lato',
-                                    fontSize: 21.0,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ),
+      body: SafeArea(
+        top: true,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 260.0,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          FlutterFlowTheme.of(context).primary,
+                          const Color(0xFF2B318A)
                         ],
+                        stops: const [0.0, 1.0],
+                        begin: const AlignmentDirectional(0.0, -1.0),
+                        end: const AlignmentDirectional(0, 1.0),
                       ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          if ((currentUserDocument?.role ==
-                                  Role.OwnerOrganization) ||
-                              (currentUserDocument?.role == Role.Organaizer) ||
-                              (currentUserDocument?.role == Role.Admin) ||
-                              (currentUserDocument?.role == Role.SemiGod) ||
-                              (currentUserDocument?.role == Role.God))
-                            AuthUserStreamWidget(
-                              builder: (context) => FlutterFlowIconButton(
-                                borderColor:
-                                    FlutterFlowTheme.of(context).tertiary,
-                                borderRadius: 12.0,
-                                borderWidth: 7.0,
-                                buttonSize: 45.0,
-                                fillColor: Colors.transparent,
-                                icon: Icon(
-                                  Icons.qr_code_sharp,
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                ),
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
-                              ),
-                            ),
-                          if ((currentUserDocument?.role ==
-                                  Role.OwnerOrganization) ||
-                              (currentUserDocument?.role == Role.Organaizer))
-                            AuthUserStreamWidget(
-                              builder: (context) => FlutterFlowIconButton(
-                                borderColor:
-                                    FlutterFlowTheme.of(context).tertiary,
-                                borderRadius: 12.0,
-                                borderWidth: 7.0,
-                                buttonSize: 45.0,
-                                fillColor: Colors.transparent,
-                                icon: Icon(
-                                  Icons.attach_money_sharp,
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                ),
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
-                              ),
-                            ),
-                        ].divide(const SizedBox(height: 15.0)),
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(36.0),
+                        bottomRight: Radius.circular(36.0),
+                        topLeft: Radius.circular(0.0),
+                        topRight: Radius.circular(0.0),
                       ),
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: const AlignmentDirectional(-1.0, 0.0),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 0.0, 0.0),
-                    child: Text(
-                      'eventi A CUI PARTECIPa',
-                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                            fontFamily: ' Brigends Expanded',
-                            letterSpacing: 0.0,
-                            useGoogleFonts: false,
-                          ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 20.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                          height: 120.0,
-                          decoration: const BoxDecoration(
-                            color: Colors.transparent,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: StreamBuilder<List<EventRecord>>(
-                                  stream: queryEventRecord(
-                                    queryBuilder: (eventRecord) =>
-                                        eventRecord.where(
-                                      'Participants',
-                                      arrayContains: currentUserReference,
-                                    ),
-                                    limit: 5,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            if ((currentUserDocument?.role ==
+                                    Role.OwnerOrganization) ||
+                                (currentUserDocument?.role == Role.Organaizer))
+                              AuthUserStreamWidget(
+                                builder: (context) => FlutterFlowIconButton(
+                                  borderColor: Colors.white,
+                                  borderRadius: 12.0,
+                                  borderWidth: 7.0,
+                                  buttonSize: 45.0,
+                                  fillColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.add,
+                                    color:
+                                        FlutterFlowTheme.of(context).tertiary,
                                   ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50.0,
-                                          height: 50.0,
-                                          child: SpinKitFadingCube(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 50.0,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<EventRecord> listViewEventRecordList =
-                                        snapshot.data!;
-
-                                    return ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: listViewEventRecordList.length,
-                                      itemBuilder: (context, listViewIndex) {
-                                        final listViewEventRecord =
-                                            listViewEventRecordList[
-                                                listViewIndex];
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 10.0, 0.0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              context.pushNamed(
-                                                'eventPageBackup',
-                                                queryParameters: {
-                                                  'eventId': serializeParam(
-                                                    listViewEventRecord
-                                                        .reference,
-                                                    ParamType.DocumentReference,
-                                                  ),
-                                                }.withoutNulls,
-                                              );
-                                            },
-                                            child: Container(
-                                              width: 100.0,
-                                              height: 100.0,
-                                              decoration: BoxDecoration(
-                                                color: const Color(0x50090F13),
-                                                borderRadius:
-                                                    BorderRadius.circular(9.0),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                1.0, 0.0),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              9.0),
-                                                      child: Image.network(
-                                                        valueOrDefault<String>(
-                                                          listViewEventRecord
-                                                              .images,
-                                                          'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
-                                                        ),
-                                                        width: 100.0,
-                                                        height: 100.0,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(3.0, 0.0,
-                                                                0.0, 0.0),
-                                                    child: Text(
-                                                      listViewEventRecord.name,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Lato',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .lineColor,
-                                                            fontSize: 12.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ).animateOnPageLoad(animationsMap[
-                                              'containerOnPageLoadAnimation1']!),
-                                        );
-                                      },
-                                    );
+                                  onPressed: () {
+                                    print('IconButton pressed ...');
                                   },
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: const AlignmentDirectional(-1.0, 0.0),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 0.0, 0.0),
-                    child: Text(
-                      'eventi Organizzati',
-                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                            fontFamily: ' Brigends Expanded',
-                            letterSpacing: 0.0,
-                            useGoogleFonts: false,
-                          ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 20.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                          height: 120.0,
-                          decoration: const BoxDecoration(
-                            color: Colors.transparent,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: StreamBuilder<List<EventRecord>>(
-                                  stream: queryEventRecord(
-                                    queryBuilder: (eventRecord) =>
-                                        eventRecord.where(
-                                      'Participants',
-                                      arrayContains: currentUserReference,
-                                    ),
-                                    limit: 5,
+                            if ((currentUserDocument?.role ==
+                                    Role.OwnerOrganization) ||
+                                (currentUserDocument?.role == Role.Organaizer))
+                              AuthUserStreamWidget(
+                                builder: (context) => FlutterFlowIconButton(
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).tertiary,
+                                  borderRadius: 12.0,
+                                  borderWidth: 7.0,
+                                  buttonSize: 45.0,
+                                  fillColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.bar_chart_sharp,
+                                    color:
+                                        FlutterFlowTheme.of(context).tertiary,
                                   ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50.0,
-                                          height: 50.0,
-                                          child: SpinKitFadingCube(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 50.0,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<EventRecord> listViewEventRecordList =
-                                        snapshot.data!;
-
-                                    return ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: listViewEventRecordList.length,
-                                      itemBuilder: (context, listViewIndex) {
-                                        final listViewEventRecord =
-                                            listViewEventRecordList[
-                                                listViewIndex];
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 10.0, 0.0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              context.pushNamed(
-                                                'eventPageBackup',
-                                                queryParameters: {
-                                                  'eventId': serializeParam(
-                                                    listViewEventRecord
-                                                        .reference,
-                                                    ParamType.DocumentReference,
-                                                  ),
-                                                }.withoutNulls,
-                                              );
-                                            },
-                                            child: Container(
-                                              width: 100.0,
-                                              height: 100.0,
-                                              decoration: BoxDecoration(
-                                                color: const Color(0x50090F13),
-                                                borderRadius:
-                                                    BorderRadius.circular(9.0),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                1.0, 0.0),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              9.0),
-                                                      child: Image.network(
-                                                        valueOrDefault<String>(
-                                                          listViewEventRecord
-                                                              .images,
-                                                          'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
-                                                        ),
-                                                        width: 100.0,
-                                                        height: 100.0,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(3.0, 0.0,
-                                                                0.0, 0.0),
-                                                    child: Text(
-                                                      listViewEventRecord.name,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Lato',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .lineColor,
-                                                            fontSize: 12.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ).animateOnPageLoad(animationsMap[
-                                              'containerOnPageLoadAnimation2']!),
-                                        );
-                                      },
-                                    );
+                                  onPressed: () {
+                                    print('IconButton pressed ...');
                                   },
                                 ),
                               ),
-                            ],
+                          ].divide(const SizedBox(height: 15.0)),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 30.0),
+                              child: AuthUserStreamWidget(
+                                builder: (context) => Container(
+                                  width: 150.0,
+                                  height: 150.0,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.network(
+                                    currentUserPhoto,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            AuthUserStreamWidget(
+                              builder: (context) => Text(
+                                currentUserDisplayName,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Lato',
+                                      fontSize: 21.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            if ((currentUserDocument?.role ==
+                                    Role.OwnerOrganization) ||
+                                (currentUserDocument?.role ==
+                                    Role.Organaizer) ||
+                                (currentUserDocument?.role == Role.Admin) ||
+                                (currentUserDocument?.role == Role.SemiGod) ||
+                                (currentUserDocument?.role == Role.God))
+                              AuthUserStreamWidget(
+                                builder: (context) => FlutterFlowIconButton(
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).tertiary,
+                                  borderRadius: 12.0,
+                                  borderWidth: 7.0,
+                                  buttonSize: 45.0,
+                                  fillColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.qr_code_sharp,
+                                    color:
+                                        FlutterFlowTheme.of(context).tertiary,
+                                  ),
+                                  onPressed: () {
+                                    print('IconButton pressed ...');
+                                  },
+                                ),
+                              ),
+                            if ((currentUserDocument?.role ==
+                                    Role.OwnerOrganization) ||
+                                (currentUserDocument?.role == Role.Organaizer))
+                              AuthUserStreamWidget(
+                                builder: (context) => FlutterFlowIconButton(
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).tertiary,
+                                  borderRadius: 12.0,
+                                  borderWidth: 7.0,
+                                  buttonSize: 45.0,
+                                  fillColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.attach_money_sharp,
+                                    color:
+                                        FlutterFlowTheme.of(context).tertiary,
+                                  ),
+                                  onPressed: () {
+                                    print('IconButton pressed ...');
+                                  },
+                                ),
+                              ),
+                          ].divide(const SizedBox(height: 15.0)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: const AlignmentDirectional(-1.0, 0.0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 0.0, 0.0),
+                      child: Text(
+                        'eventi A CUI PARTECIPa',
+                        style: FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: ' Brigends Expanded',
+                              letterSpacing: 0.0,
+                              useGoogleFonts: false,
+                            ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 20.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: double.infinity,
+                            height: 120.0,
+                            decoration: const BoxDecoration(
+                              color: Colors.transparent,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: StreamBuilder<List<EventRecord>>(
+                                    stream: queryEventRecord(
+                                      queryBuilder: (eventRecord) =>
+                                          eventRecord.where(
+                                        'Participants',
+                                        arrayContains: currentUserReference,
+                                      ),
+                                      limit: 5,
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            child: SpinKitFadingCube(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 50.0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<EventRecord>
+                                          listViewEventRecordList =
+                                          snapshot.data!;
+
+                                      return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount:
+                                            listViewEventRecordList.length,
+                                        itemBuilder: (context, listViewIndex) {
+                                          final listViewEventRecord =
+                                              listViewEventRecordList[
+                                                  listViewIndex];
+                                          return Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 10.0, 0.0),
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                context.pushNamed(
+                                                  'eventPageBackup',
+                                                  queryParameters: {
+                                                    'eventId': serializeParam(
+                                                      listViewEventRecord
+                                                          .reference,
+                                                      ParamType
+                                                          .DocumentReference,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 100.0,
+                                                height: 100.0,
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0x50090F13),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          9.0),
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  1.0,
+                                                                  0.0),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(9.0),
+                                                        child: Image.network(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            listViewEventRecord
+                                                                .images,
+                                                            'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
+                                                          ),
+                                                          width: 100.0,
+                                                          height: 100.0,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  3.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        listViewEventRecord
+                                                            .name,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Lato',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .lineColor,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ).animateOnPageLoad(animationsMap[
+                                                'containerOnPageLoadAnimation1']!),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  Align(
+                    alignment: const AlignmentDirectional(-1.0, 0.0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 0.0, 0.0),
+                      child: Text(
+                        'eventi Organizzati',
+                        style: FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: ' Brigends Expanded',
+                              letterSpacing: 0.0,
+                              useGoogleFonts: false,
+                            ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 20.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: double.infinity,
+                            height: 120.0,
+                            decoration: const BoxDecoration(
+                              color: Colors.transparent,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: StreamBuilder<List<EventRecord>>(
+                                    stream: queryEventRecord(
+                                      queryBuilder: (eventRecord) =>
+                                          eventRecord.where(
+                                        'Participants',
+                                        arrayContains: currentUserReference,
+                                      ),
+                                      limit: 5,
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            child: SpinKitFadingCube(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 50.0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<EventRecord>
+                                          listViewEventRecordList =
+                                          snapshot.data!;
+
+                                      return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount:
+                                            listViewEventRecordList.length,
+                                        itemBuilder: (context, listViewIndex) {
+                                          final listViewEventRecord =
+                                              listViewEventRecordList[
+                                                  listViewIndex];
+                                          return Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 10.0, 0.0),
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                context.pushNamed(
+                                                  'eventPageBackup',
+                                                  queryParameters: {
+                                                    'eventId': serializeParam(
+                                                      listViewEventRecord
+                                                          .reference,
+                                                      ParamType
+                                                          .DocumentReference,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 100.0,
+                                                height: 100.0,
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0x50090F13),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          9.0),
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  1.0,
+                                                                  0.0),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(9.0),
+                                                        child: Image.network(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            listViewEventRecord
+                                                                .images,
+                                                            'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
+                                                          ),
+                                                          width: 100.0,
+                                                          height: 100.0,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  3.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        listViewEventRecord
+                                                            .name,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Lato',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .lineColor,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ).animateOnPageLoad(animationsMap[
+                                                'containerOnPageLoadAnimation2']!),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

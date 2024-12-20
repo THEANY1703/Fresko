@@ -93,15 +93,14 @@ class _HomeLocationPageWidgetState extends State<HomeLocationPageWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'scopri',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyLarge
-                                .override(
-                                  fontFamily: ' Brigends Expanded',
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                  letterSpacing: 0.0,
-                                  useGoogleFonts: false,
-                                ),
+                            'Tutti i locali',
+                            style:
+                                FlutterFlowTheme.of(context).bodySmall.override(
+                                      fontFamily: 'Lato',
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                           ),
                         ],
                       ),
@@ -268,6 +267,17 @@ class _HomeLocationPageWidgetState extends State<HomeLocationPageWidget> {
                     ),
                   ),
                 ),
+              ),
+            ),
+            Align(
+              alignment: const AlignmentDirectional(-0.95, -0.95),
+              child: Text(
+                'Locali per tipologia',
+                style: FlutterFlowTheme.of(context).bodySmall.override(
+                      fontFamily: 'Lato',
+                      fontSize: 16.0,
+                      letterSpacing: 0.0,
+                    ),
               ),
             ),
           ],

@@ -122,7 +122,10 @@ class _EventEditWidgetState extends State<EventEditWidget> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
-                        widget.eventRef!.images,
+                        valueOrDefault<String>(
+                          widget.eventRef?.images,
+                          'https://firebasestorage.googleapis.com/v0/b/fresko-1e75d.appspot.com/o/users%2FfIm8tosqbeea1Hml8qEIRpFUGiM2%2Fuploads%2F1732136426067000.jpeg?alt=media&token=5897cd1f-995a-482e-8fbc-3da80c2bca4f',
+                        ),
                         width: 160.0,
                         height: 200.0,
                         fit: BoxFit.cover,
@@ -603,110 +606,120 @@ class _EventEditWidgetState extends State<EventEditWidget> {
                   ),
                   Align(
                     alignment: const AlignmentDirectional(0.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                15.0, 0.0, 15.0, 20.0),
-                            child: StreamBuilder<List<LocationRecord>>(
-                              stream: queryLocationRecord(
-                                queryBuilder: (locationRecord) =>
-                                    locationRecord.orderBy('DisplayName'),
-                              )..listen((snapshot) {
-                                  List<LocationRecord>
-                                      locationDropDownLocationRecordList =
-                                      snapshot;
-                                  if (_model.locationDropDownPreviousSnapshot !=
-                                          null &&
-                                      !const ListEquality(
-                                              LocationRecordDocumentEquality())
-                                          .equals(
-                                              locationDropDownLocationRecordList,
-                                              _model
-                                                  .locationDropDownPreviousSnapshot)) {
-                                    () async {
-                                      _model.locationReference =
-                                          await queryLocationRecordOnce(
-                                        queryBuilder: (locationRecord) =>
-                                            locationRecord.where(
-                                          'DisplayName',
-                                          isEqualTo: _model
-                                              .locationReference?.displayName,
-                                        ),
-                                        singleRecord: true,
-                                      ).then((s) => s.firstOrNull);
-
-                                      safeSetState(() {});
-                                    }();
-                                  }
-                                  _model.locationDropDownPreviousSnapshot =
-                                      snapshot;
-                                }),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: SpinKitFadingCube(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        size: 50.0,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                List<LocationRecord>
-                                    locationDropDownLocationRecordList =
-                                    snapshot.data!;
-
-                                return FlutterFlowDropDown<String>(
-                                  controller:
-                                      _model.locationDropDownValueController ??=
-                                          FormFieldController<String>(
-                                    _model.locationDropDownValue ??=
-                                        widget.eventRef?.location?.id,
-                                  ),
-                                  options: locationDropDownLocationRecordList
-                                      .map((e) => e.displayName)
-                                      .toList(),
-                                  onChanged: (val) => safeSetState(
-                                      () => _model.locationDropDownValue = val),
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Lato',
-                                        color: const Color(0xFFA09F99),
-                                        letterSpacing: 0.0,
-                                      ),
-                                  hintText: 'es. Levante',
-                                  icon: const Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: Color(0xC0CF3A0A),
-                                    size: 24.0,
-                                  ),
-                                  fillColor: const Color(0xFFD8D8DD),
-                                  elevation: 2.0,
-                                  borderColor: Colors.transparent,
-                                  borderWidth: 0.0,
-                                  borderRadius: 16.0,
-                                  margin: const EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 12.0, 0.0),
-                                  hidesUnderline: true,
-                                  isOverButton: false,
-                                  isSearchable: false,
-                                  isMultiSelect: false,
-                                );
-                              },
+                    child: StreamBuilder<LocationRecord>(
+                      stream: LocationRecord.getDocument(
+                          widget.eventRef!.location!),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: SpinKitFadingCube(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                size: 50.0,
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
+                          );
+                        }
+
+                        final rowLocationRecord = snapshot.data!;
+
+                        return Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    15.0, 0.0, 15.0, 20.0),
+                                child: StreamBuilder<List<LocationRecord>>(
+                                  stream: queryLocationRecord(
+                                    queryBuilder: (locationRecord) =>
+                                        locationRecord.orderBy('DisplayName'),
+                                  )..listen((snapshot) {
+                                      List<LocationRecord>
+                                          locationDropDownLocationRecordList =
+                                          snapshot;
+                                      if (_model.locationDropDownPreviousSnapshot !=
+                                              null &&
+                                          !const ListEquality(
+                                                  LocationRecordDocumentEquality())
+                                              .equals(
+                                                  locationDropDownLocationRecordList,
+                                                  _model
+                                                      .locationDropDownPreviousSnapshot)) {
+                                        () async {}();
+                                      }
+                                      _model.locationDropDownPreviousSnapshot =
+                                          snapshot;
+                                    }),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: SpinKitFadingCube(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 50.0,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<LocationRecord>
+                                        locationDropDownLocationRecordList =
+                                        snapshot.data!;
+
+                                    return FlutterFlowDropDown<String>(
+                                      controller: _model
+                                              .locationDropDownValueController ??=
+                                          FormFieldController<String>(
+                                        _model.locationDropDownValue ??=
+                                            rowLocationRecord.displayName,
+                                      ),
+                                      options:
+                                          locationDropDownLocationRecordList
+                                              .map((e) => e.displayName)
+                                              .toList(),
+                                      onChanged: (val) => safeSetState(() =>
+                                          _model.locationDropDownValue = val),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Lato',
+                                            color: const Color(0xFFA09F99),
+                                            letterSpacing: 0.0,
+                                          ),
+                                      hintText: 'es. Levante',
+                                      icon: const Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: Color(0xC0CF3A0A),
+                                        size: 24.0,
+                                      ),
+                                      fillColor: const Color(0xFFD8D8DD),
+                                      elevation: 2.0,
+                                      borderColor: Colors.transparent,
+                                      borderWidth: 0.0,
+                                      borderRadius: 16.0,
+                                      margin: const EdgeInsetsDirectional.fromSTEB(
+                                          12.0, 0.0, 12.0, 0.0),
+                                      hidesUnderline: true,
+                                      isOverButton: false,
+                                      isSearchable: false,
+                                      isMultiSelect: false,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                   Padding(
@@ -962,16 +975,25 @@ class _EventEditWidgetState extends State<EventEditWidget> {
                           const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 40.0),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          _model.locRef = await queryLocationRecordOnce(
+                            queryBuilder: (locationRecord) =>
+                                locationRecord.where(
+                              'DisplayName',
+                              isEqualTo: _model.locationDropDownValue,
+                            ),
+                            singleRecord: true,
+                          ).then((s) => s.firstOrNull);
+
                           await widget.eventRef!.reference.update({
                             ...createEventRecordData(
                               dateEvent: _model.datePicked,
-                              location: _model.locationReference?.reference,
                               creationAt: getCurrentTimestamp,
                               description:
                                   _model.descriptionTextController.text,
                               images: _model.uploadedFileUrl,
                               owner: currentUserDocument?.organization,
                               name: _model.dispalyTitleTextController.text,
+                              location: _model.locRef?.reference,
                             ),
                             ...mapToFirestore(
                               {

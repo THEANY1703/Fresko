@@ -58,6 +58,11 @@ class UserRecord extends FirestoreRecord {
   DocumentReference? get organization => _organization;
   bool hasOrganization() => _organization != null;
 
+  // "ListSelected" field.
+  DocumentReference? _listSelected;
+  DocumentReference? get listSelected => _listSelected;
+  bool hasListSelected() => _listSelected != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -69,6 +74,7 @@ class UserRecord extends FirestoreRecord {
         ? snapshotData['Role']
         : deserializeEnum<Role>(snapshotData['Role']);
     _organization = snapshotData['Organization'] as DocumentReference?;
+    _listSelected = snapshotData['ListSelected'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -111,6 +117,11 @@ class UserRecord extends FirestoreRecord {
           ),
           'Organization': convertAlgoliaParam(
             snapshot.data['Organization'],
+            ParamType.DocumentReference,
+            false,
+          ),
+          'ListSelected': convertAlgoliaParam(
+            snapshot.data['ListSelected'],
             ParamType.DocumentReference,
             false,
           ),
@@ -158,6 +169,7 @@ Map<String, dynamic> createUserRecordData({
   String? phoneNumber,
   Role? role,
   DocumentReference? organization,
+  DocumentReference? listSelected,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -169,6 +181,7 @@ Map<String, dynamic> createUserRecordData({
       'phone_number': phoneNumber,
       'Role': role,
       'Organization': organization,
+      'ListSelected': listSelected,
     }.withoutNulls,
   );
 
@@ -187,7 +200,8 @@ class UserRecordDocumentEquality implements Equality<UserRecord> {
         e1?.createdTime == e2?.createdTime &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.role == e2?.role &&
-        e1?.organization == e2?.organization;
+        e1?.organization == e2?.organization &&
+        e1?.listSelected == e2?.listSelected;
   }
 
   @override
@@ -199,7 +213,8 @@ class UserRecordDocumentEquality implements Equality<UserRecord> {
         e?.createdTime,
         e?.phoneNumber,
         e?.role,
-        e?.organization
+        e?.organization,
+        e?.listSelected
       ]);
 
   @override

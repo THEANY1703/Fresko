@@ -98,11 +98,10 @@ class _TableComposingWidgetState extends State<TableComposingWidget> {
                 children: [
                   Text(
                     'Invita i tuoi amici',
-                    style: FlutterFlowTheme.of(context).labelLarge.override(
-                          fontFamily: ' Brigends Expanded',
-                          fontSize: 21.0,
+                    style: FlutterFlowTheme.of(context).bodySmall.override(
+                          fontFamily: 'Lato',
+                          fontSize: 20.0,
                           letterSpacing: 0.0,
-                          useGoogleFonts: false,
                         ),
                   ),
                 ],

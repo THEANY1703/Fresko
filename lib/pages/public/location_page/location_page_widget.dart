@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -148,6 +149,7 @@ class _LocationPageWidgetState extends State<LocationPageWidget>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
+                          height: MediaQuery.sizeOf(context).height,
                           constraints: const BoxConstraints(
                             maxWidth: 570.0,
                           ),
@@ -222,10 +224,17 @@ class _LocationPageWidgetState extends State<LocationPageWidget>
                                   style: FlutterFlowTheme.of(context)
                                       .titleLarge
                                       .override(
-                                        fontFamily: 'Lato',
-                                        fontSize: 25.0,
-                                        letterSpacing: 0.0,
-                                      ),
+                                    fontFamily: 'Lato',
+                                    fontSize: 25.0,
+                                    letterSpacing: 0.0,
+                                    shadows: [
+                                      const Shadow(
+                                        color: Colors.black,
+                                        offset: Offset(2.0, 2.0),
+                                        blurRadius: 2.0,
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
@@ -235,10 +244,46 @@ class _LocationPageWidgetState extends State<LocationPageWidget>
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          fontFamily: 'Lato',
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.0,
-                                        ),
+                                      fontFamily: 'Lato',
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      shadows: [
+                                        const Shadow(
+                                          color: Colors.black,
+                                          offset: Offset(2.0, 2.0),
+                                          blurRadius: 2.0,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: const AlignmentDirectional(1.0, 0.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await launchURL(
+                                          'https://www.google.it/maps/place/Cinema+Paradiso/@37.5012912,15.0816252,17z/data=!3m1!4b1!4m6!3m5!1s0x1313e3d562190b01:0xf24ac84e44095e4d!8m2!3d37.501287!4d15.0842001!16s%2Fg%2F11vhxdqp_r?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D');
+                                    },
+                                    text: 'Portami la',
+                                    options: FFButtonOptions(
+                                      height: 40.0,
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Lato',
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(18.0),
+                                    ),
                                   ),
                                 ),
                                 Text(
@@ -246,10 +291,17 @@ class _LocationPageWidgetState extends State<LocationPageWidget>
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        fontFamily: 'Lato',
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.0,
-                                      ),
+                                    fontFamily: 'Lato',
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                    shadows: [
+                                      const Shadow(
+                                        color: Colors.black,
+                                        offset: Offset(2.0, 2.0),
+                                        blurRadius: 2.0,
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
@@ -320,7 +372,7 @@ class _LocationPageWidgetState extends State<LocationPageWidget>
                                                             decoration:
                                                                 BoxDecoration(
                                                               color: const Color(
-                                                                  0x50090F13),
+                                                                  0x80000000),
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(

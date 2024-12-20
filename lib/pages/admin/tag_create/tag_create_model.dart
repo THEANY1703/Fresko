@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 class TagCreateModel extends FlutterFlowModel<TagCreateWidget> {
   ///  State fields for stateful widgets in this page.
 
+  bool isDataUploading = false;
+  FFUploadedFile uploadedLocalFile =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl = '';
+
   // State field(s) for dispalyTitle widget.
   FocusNode? dispalyTitleFocusNode;
   TextEditingController? dispalyTitleTextController;

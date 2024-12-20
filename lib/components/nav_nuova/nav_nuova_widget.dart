@@ -459,6 +459,17 @@ class _NavNuovaWidgetState extends State<NavNuovaWidget> {
                                   height: 60.0,
                                   decoration: const BoxDecoration(
                                     color: Colors.black,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 11.0,
+                                        color: Color(0x33FFF7F7),
+                                        offset: Offset(
+                                          0.0,
+                                          0.0,
+                                        ),
+                                        spreadRadius: 5.0,
+                                      )
+                                    ],
                                     shape: BoxShape.circle,
                                   ),
                                   child: Align(

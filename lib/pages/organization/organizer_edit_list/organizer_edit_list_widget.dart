@@ -543,22 +543,7 @@ class _OrganizerEditListWidgetState extends State<OrganizerEditListWidget> {
                                                   safeSetState(() {
                                                     _model
                                                         .selectPrTextController
-                                                        ?.text = ""; 
-                                                    _model.selectPrFocusNode
-                                                        ?.requestFocus();
-                                                    WidgetsBinding.instance
-                                                        .addPostFrameCallback(
-                                                            (_) {
-                                                      _model.selectPrTextController
-                                                              ?.selection =
-                                                          TextSelection
-                                                              .collapsed(
-                                                        offset: _model
-                                                            .selectPrTextController!
-                                                            .text
-                                                            .length,
-                                                      );
-                                                    });
+                                                        ?.text = '';
                                                   });
 
                                                   safeSetState(() {});

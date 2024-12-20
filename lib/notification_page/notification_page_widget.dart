@@ -77,14 +77,7 @@ class _NotificationPageWidgetState extends State<NotificationPageWidget> {
         body: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: Image.asset(
-                    'assets/images/Unknown.jpeg',
-                  ).image,
-                ),
-              ),
+              decoration: const BoxDecoration(),
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                 child: Column(
@@ -100,9 +93,19 @@ class _NotificationPageWidgetState extends State<NotificationPageWidget> {
                         children: [
                           Container(
                             width: MediaQuery.sizeOf(context).width * 1.0,
+                            height: 65.0,
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).alternate,
-                              borderRadius: BorderRadius.circular(24.0),
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 40.0,
+                                  color: Color(0x337B7B7B),
+                                  offset: Offset(
+                                    0.0,
+                                    0.0,
+                                  ),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(0.0),
                             ),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(

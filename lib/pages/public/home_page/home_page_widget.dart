@@ -225,7 +225,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                       image: DecorationImage(
                                                         fit: BoxFit.cover,
                                                         image: Image.network(
-                                                          'https://images.unsplash.com/photo-1654031623184-d998eae6ce25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwxN3x8bXVzaWMlMjBid3xlbnwwfHx8fDE3MzQwMzYwMzB8MA&ixlib=rb-4.0.3&q=80&w=1080',
+                                                          listViewTagRecord
+                                                              .image,
                                                         ).image,
                                                       ),
                                                       gradient: LinearGradient(

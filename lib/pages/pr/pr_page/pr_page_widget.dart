@@ -119,18 +119,15 @@ class _PrPageWidgetState extends State<PrPageWidget>
                 context.safePop();
               },
             ),
-            title: Align(
-              alignment: const AlignmentDirectional(0.0, 0.0),
-              child: Text(
-                'pr organizzatore',
-                textAlign: TextAlign.start,
-                style: FlutterFlowTheme.of(context).displayLarge.override(
-                      fontFamily: ' Brigends Expanded',
-                      fontSize: 20.0,
-                      letterSpacing: 0.0,
-                      useGoogleFonts: false,
-                    ),
-              ),
+            title: Text(
+              'pr',
+              textAlign: TextAlign.start,
+              style: FlutterFlowTheme.of(context).displayLarge.override(
+                    fontFamily: ' Brigends Expanded',
+                    fontSize: 20.0,
+                    letterSpacing: 0.0,
+                    useGoogleFonts: false,
+                  ),
             ),
             actions: const [],
             centerTitle: true,
@@ -469,7 +466,7 @@ class _PrPageWidgetState extends State<PrPageWidget>
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             15.0, 20.0, 0.0, 10.0),
                         child: Text(
-                          'servizi organizzatore',
+                          'servizi Pr',
                           style:
                               FlutterFlowTheme.of(context).bodyLarge.override(
                                     fontFamily: ' Brigends Expanded',
@@ -480,91 +477,102 @@ class _PrPageWidgetState extends State<PrPageWidget>
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Material(
-                          color: Colors.transparent,
-                          elevation: 0.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width * 0.9,
-                            height: 60.0,
-                            decoration: BoxDecoration(
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed('PrSelectList');
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Material(
+                            color: Colors.transparent,
+                            elevation: 0.0,
+                            shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              border: Border.all(
-                                color: Colors.transparent,
-                                width: 0.0,
-                              ),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 4.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 26.0,
-                                        height: 100.0,
-                                        decoration: const BoxDecoration(),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            FaIcon(
-                                              FontAwesomeIcons.pen,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiary,
-                                              size: 20.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 0.0, 0.0, 0.0),
-                                        child: Text(
-                                          'Seleziona la tua lista',
-                                          style: FlutterFlowTheme.of(context)
-                                              .titleSmall
-                                              .override(
-                                                fontFamily: 'Lato',
-                                                letterSpacing: 0.0,
+                            child: Container(
+                              width: MediaQuery.sizeOf(context).width * 0.9,
+                              height: 60.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                border: Border.all(
+                                  color: Colors.transparent,
+                                  width: 0.0,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 4.0, 0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 26.0,
+                                          height: 100.0,
+                                          decoration: const BoxDecoration(),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              FaIcon(
+                                                FontAwesomeIcons.pen,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiary,
+                                                size: 20.0,
                                               ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30.0,
-                                    buttonSize: 46.0,
-                                    icon: Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 25.0,
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Seleziona la tua lista',
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleSmall
+                                                .override(
+                                                  fontFamily: 'Lato',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    onPressed: () {
-                                      print('IconButton pressed ...');
-                                    },
-                                  ),
-                                ],
+                                    FlutterFlowIconButton(
+                                      borderColor: Colors.transparent,
+                                      borderRadius: 30.0,
+                                      buttonSize: 46.0,
+                                      icon: Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        size: 25.0,
+                                      ),
+                                      onPressed: () {
+                                        print('IconButton pressed ...');
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     InkWell(
                       splashColor: Colors.transparent,
@@ -572,7 +580,19 @@ class _PrPageWidgetState extends State<PrPageWidget>
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        context.pushNamed('AdminSelectOrganizer');
+                        context.pushNamed(
+                          'analytichs',
+                          queryParameters: {
+                            'orgRef': serializeParam(
+                              widget.organizationReference,
+                              ParamType.DocumentReference,
+                            ),
+                            'prList': serializeParam(
+                              currentUserDocument?.listSelected,
+                              ParamType.DocumentReference,
+                            ),
+                          }.withoutNulls,
+                        );
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,

@@ -78,3 +78,6 @@ export '/pages/public/location_page/location_page_widget.dart'
 export '/tag_page/tag_page_widget.dart' show TagPageWidget;
 export '/notification_page/notification_page_widget.dart'
     show NotificationPageWidget;
+export '/feedback/feedback_widget.dart' show FeedbackWidget;
+export '/pages/organization/organization_page_copy/organization_page_copy_widget.dart'
+    show OrganizationPageCopyWidget;

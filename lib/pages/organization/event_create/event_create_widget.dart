@@ -9,9 +9,9 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
+import 'dart:ui';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -118,7 +118,10 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
-                        _model.uploadedFileUrl,
+                        valueOrDefault<String>(
+                          _model.uploadedFileUrl,
+                          'https://firebasestorage.googleapis.com/v0/b/fresko-1e75d.appspot.com/o/users%2FfIm8tosqbeea1Hml8qEIRpFUGiM2%2Fuploads%2F1732136426067000.jpeg?alt=media&token=5897cd1f-995a-482e-8fbc-3da80c2bca4f',
+                        ),
                         width: 160.0,
                         height: 200.0,
                         fit: BoxFit.cover,
@@ -649,20 +652,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                               locationDropDownLocationRecordList,
                                               _model
                                                   .locationDropDownPreviousSnapshot)) {
-                                    () async {
-                                      _model.locationReference =
-                                          await queryLocationRecordOnce(
-                                        queryBuilder: (locationRecord) =>
-                                            locationRecord.where(
-                                          'DisplayName',
-                                          isEqualTo: _model
-                                              .locationReference?.displayName,
-                                        ),
-                                        singleRecord: true,
-                                      ).then((s) => s.firstOrNull);
-
-                                      safeSetState(() {});
-                                    }();
+                                    () async {}();
                                   }
                                   _model.locationDropDownPreviousSnapshot =
                                       snapshot;
@@ -960,6 +950,15 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                           const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 40.0),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          _model.locationRef = await queryLocationRecordOnce(
+                            queryBuilder: (locationRecord) =>
+                                locationRecord.where(
+                              'DisplayName',
+                              isEqualTo: _model.locationDropDownValue,
+                            ),
+                            singleRecord: true,
+                          ).then((s) => s.firstOrNull);
+
                           var eventRecordReference =
                               EventRecord.collection.doc();
                           await eventRecordReference.set({
@@ -969,7 +968,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                               dateEvent: _model.datePicked,
                               description:
                                   _model.descriptionTextController.text,
-                              location: _model.locationReference?.reference,
+                              location: _model.locationRef?.reference,
                             ),
                             ...mapToFirestore(
                               {
@@ -990,7 +989,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                               dateEvent: _model.datePicked,
                               description:
                                   _model.descriptionTextController.text,
-                              location: _model.locationReference?.reference,
+                              location: _model.locationRef?.reference,
                             ),
                             ...mapToFirestore(
                               {

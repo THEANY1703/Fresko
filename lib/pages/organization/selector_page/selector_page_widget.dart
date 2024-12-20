@@ -144,7 +144,7 @@ class _SelectorPageWidgetState extends State<SelectorPageWidget>
                           const EdgeInsetsDirectional.fromSTEB(15.0, 40.0, 15.0, 0.0),
                       child: Container(
                         width: double.infinity,
-                        height: 138.0,
+                        height: 139.0,
                         decoration: BoxDecoration(
                           boxShadow: const [
                             BoxShadow(
@@ -640,11 +640,11 @@ class _SelectorPageWidgetState extends State<SelectorPageWidget>
                                                                         buttonSize:
                                                                             40.0,
                                                                         icon:
-                                                                            Icon(
+                                                                            const Icon(
                                                                           Icons
                                                                               .accessibility_new,
                                                                           color:
-                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                              Color(0xFF030000),
                                                                           size:
                                                                               24.0,
                                                                         ),

@@ -26,8 +26,6 @@ class EventCreateModel extends FlutterFlowModel<EventCreateWidget> {
   String? locationDropDownValue;
   FormFieldController<String>? locationDropDownValueController;
   List<LocationRecord>? locationDropDownPreviousSnapshot;
-  // Stores action output result for [Firestore Query - Query a collection] action in LocationDropDown widget.
-  LocationRecord? locationReference;
   // State field(s) for TagDropDown widget.
   String? tagDropDownValue;
   FormFieldController<String>? tagDropDownValueController;
@@ -38,6 +36,8 @@ class EventCreateModel extends FlutterFlowModel<EventCreateWidget> {
   FocusNode? linksocialFocusNode;
   TextEditingController? linksocialTextController;
   String? Function(BuildContext, String?)? linksocialTextControllerValidator;
+  // Stores action output result for [Firestore Query - Query a collection] action in Confirmation widget.
+  LocationRecord? locationRef;
   // Stores action output result for [Backend Call - Create Document] action in Confirmation widget.
   EventRecord? eventCreated;
 

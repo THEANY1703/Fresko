@@ -20,6 +20,8 @@ export '/backend/firebase_dynamic_links/firebase_dynamic_links.dart'
 
 const kTransitionInfoKey = '__transition_info__';
 
+GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
+
 class AppStateNotifier extends ChangeNotifier {
   AppStateNotifier._();
 
@@ -77,6 +79,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
+      navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) => _RouteErrorBuilder(
         state: state,
         child: appStateNotifier.loggedIn ? const HomePageWidget() : const EnterPageWidget(),
@@ -511,6 +514,23 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'NotificationPage',
           path: '/notificationPage',
           builder: (context, params) => const NotificationPageWidget(),
+        ),
+        FFRoute(
+          name: 'feedback',
+          path: '/feedback',
+          builder: (context, params) => const FeedbackWidget(),
+        ),
+        FFRoute(
+          name: 'OrganizationPageCopy',
+          path: '/OrganizationPageCopy',
+          builder: (context, params) => OrganizationPageCopyWidget(
+            organizationReference: params.getParam(
+              'organizationReference',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['Organization'],
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

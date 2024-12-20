@@ -1,6 +1,7 @@
 import '/backend/backend.dart';
 import '/components/nav_nuova/nav_nuova_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'search_page_widget.dart' show SearchPageWidget;
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,12 @@ class SearchPageModel extends FlutterFlowModel<SearchPageWidget> {
   String? Function(BuildContext, String?)? textControllerValidator;
   // Algolia Search Results from action on TextField
   List<EventRecord>? algoliaSearchResults = [];
+  // State field(s) for ChoiceChips widget.
+  FormFieldController<List<String>>? choiceChipsValueController;
+  String? get choiceChipsValue =>
+      choiceChipsValueController?.value?.firstOrNull;
+  set choiceChipsValue(String? val) =>
+      choiceChipsValueController?.value = val != null ? [val] : [];
   // Model for NavNuova component.
   late NavNuovaModel navNuovaModel;
 

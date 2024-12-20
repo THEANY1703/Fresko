@@ -83,7 +83,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         ),
         body: Container(
           decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).secondaryBackground,
             image: DecorationImage(
               fit: BoxFit.cover,
               image: Image.asset(

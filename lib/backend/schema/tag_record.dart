@@ -30,10 +30,16 @@ class TagRecord extends FirestoreRecord {
   String get descripton => _descripton ?? '';
   bool hasDescripton() => _descripton != null;
 
+  // "Image" field.
+  String? _image;
+  String get image => _image ?? '';
+  bool hasImage() => _image != null;
+
   void _initializeFields() {
     _dispalyName = snapshotData['DispalyName'] as String?;
     _events = snapshotData['Events'] as DocumentReference?;
     _descripton = snapshotData['Descripton'] as String?;
+    _image = snapshotData['Image'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -73,12 +79,14 @@ Map<String, dynamic> createTagRecordData({
   String? dispalyName,
   DocumentReference? events,
   String? descripton,
+  String? image,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'DispalyName': dispalyName,
       'Events': events,
       'Descripton': descripton,
+      'Image': image,
     }.withoutNulls,
   );
 
@@ -92,12 +100,13 @@ class TagRecordDocumentEquality implements Equality<TagRecord> {
   bool equals(TagRecord? e1, TagRecord? e2) {
     return e1?.dispalyName == e2?.dispalyName &&
         e1?.events == e2?.events &&
-        e1?.descripton == e2?.descripton;
+        e1?.descripton == e2?.descripton &&
+        e1?.image == e2?.image;
   }
 
   @override
-  int hash(TagRecord? e) =>
-      const ListEquality().hash([e?.dispalyName, e?.events, e?.descripton]);
+  int hash(TagRecord? e) => const ListEquality()
+      .hash([e?.dispalyName, e?.events, e?.descripton, e?.image]);
 
   @override
   bool isValidKey(Object? o) => o is TagRecord;

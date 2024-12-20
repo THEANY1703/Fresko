@@ -102,11 +102,11 @@ class _DialogTicketWidgetState extends State<DialogTicketWidget> {
                 children: [
                   Text(
                     'Prenota Il tuo biglietto',
-                    style: FlutterFlowTheme.of(context).displaySmall.override(
-                          fontFamily: ' Brigends Expanded',
-                          fontSize: 16.0,
+                    style: FlutterFlowTheme.of(context).bodySmall.override(
+                          fontFamily: 'Lato',
+                          fontSize: 22.0,
                           letterSpacing: 0.0,
-                          useGoogleFonts: false,
+                          fontWeight: FontWeight.bold,
                         ),
                   ),
                 ],
