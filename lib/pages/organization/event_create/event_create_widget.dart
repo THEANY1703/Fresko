@@ -433,7 +433,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                     .headlineMedium
                                                                     .override(
                                                                       fontFamily:
-                                                                          ' Brigends Expanded',
+                                                                          'Lato',
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
                                                                           .primaryText,

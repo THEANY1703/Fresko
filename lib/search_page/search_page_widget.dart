@@ -285,8 +285,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                               context)
                                                           .headlineMedium
                                                           .override(
-                                                            fontFamily:
-                                                                ' Brigends Expanded',
+                                                            fontFamily: 'Lato',
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .primaryText,

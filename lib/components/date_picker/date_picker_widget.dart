@@ -113,7 +113,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                                                     .headlineMedium
                                                     .override(
                                                       fontFamily:
-                                                          ' Brigends Expanded',
+                                                          'Lato',
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
