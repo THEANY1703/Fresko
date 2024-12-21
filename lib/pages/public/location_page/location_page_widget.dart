@@ -224,10 +224,9 @@ class _LocationPageWidgetState extends State<LocationPageWidget>
                                     Text(
                                       locationPageLocationRecord.displayName,
                                       style: FlutterFlowTheme.of(context)
-                                          .titleLarge
+                                          .bodyMedium
                                           .override(
                                         fontFamily: 'Lato',
-                                        fontSize: 25.0,
                                         letterSpacing: 0.0,
                                         shadows: [
                                           const Shadow(

@@ -378,28 +378,7 @@ class _ProfileGodWidgetState extends State<ProfileGodWidget> {
                                             ],
                                           ),
                                         ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            'Menu utente',
-                                            style: FlutterFlowTheme.of(context)
-                                                .titleSmall
-                                                .override(
-                                              fontFamily: 'Lato',
-                                              letterSpacing: 0.0,
-                                              shadows: [
-                                                const Shadow(
-                                                  color: Colors.black,
-                                                  offset: Offset(2.0, 2.0),
-                                                  blurRadius: 5.0,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                        ],
                                     ),
                                     FlutterFlowIconButton(
                                       borderColor: Colors.transparent,
